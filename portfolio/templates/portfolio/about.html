@@ -1,0 +1,115 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% block title %}About | Fernando Priego{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">About <span>Me</span></h2>
+        <div class="section-line"></div>
+
+        <div class="about-grid">
+
+            <!-- LEFT: foto + datos -->
+            <div class="about-left">
+                <div class="about-img-wrapper">
+                    <img src="{% static 'portfolio/img/profile.jpg' %}" alt="Fernando Priego">
+                </div>
+                <div class="about-contact-card">
+                    <div class="contact-item">
+                        <span class="contact-label">Location</span>
+                        <span>Tlalnepantla, Estado de México</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Email</span>
+                        <a href="mailto:fernandopriego1994@gmail.com">fernandopriego1994@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Phone</span>
+                        <span>+52 (55) 5530383452</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: bio + educación -->
+            <div class="about-right">
+                <h3 class="about-role">Networking & Hybrid Infrastructure Specialist</h3>
+                <p class="about-bio">
+                    Network professional with <strong>6+ years of experience</strong> in enterprise
+                    infrastructure, with a strong specialization in AWS Cloud Architecture over the
+                    last 1.5 years. Expert in designing resilient, high-availability hybrid environments
+                    using Direct Connect, Transit Gateway, and Advanced VPC design.
+                </p>
+                <p class="about-bio">
+                    Proven expertise in IAM Governance, EC2 & Database deployment, and Route 53,
+                    ensuring secure and scalable cloud foundations. Leveraging a deep networking
+                    background to architect Disaster Recovery & Migration strategies and automate
+                    operations via Python and Ansible. Currently expanding into EKS/ECS to support
+                    modern cloud-native ecosystems.
+                </p>
+
+                <div class="about-highlights">
+                    <div class="highlight-item">
+                        <span class="highlight-number">6+</span>
+                        <span class="highlight-label">Years Experience</span>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-number">2</span>
+                        <span class="highlight-label">AWS Certifications</span>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-number">4</span>
+                        <span class="highlight-label">Companies</span>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-number">9</span>
+                        <span class="highlight-label">Total Badges</span>
+                    </div>
+                </div>
+
+                <!-- Educación -->
+                <div class="about-education">
+                    <h4 class="about-subtitle">Education</h4>
+                    <div class="edu-item edu-clickable" onclick="openDegree()">
+                        <div class="edu-icon">🎓</div>
+                        <div>
+                            <strong>Bachelor's Degree</strong>
+                            <span>Ingeniero en Tecnologías de la Información y Comunicaciones</span>
+                            <span class="edu-school">Instituto Tecnológico de Tlalnepantla — TecNM</span>
+                            <span class="edu-date">Issued: April 29, 2019</span>
+                            <span class="cert-view-btn">View Degree →</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-actions">
+                    <a href="{% url 'contact' %}" class="btn-primary">Contact Me</a>
+                    <a href="{% url 'certifications' %}" class="btn-outline">View Certifications</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal del título -->
+<div id="degree-modal" class="modal-overlay" onclick="closeDegree()">
+    <div class="modal-box modal-img-box" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeDegree()">✕</button>
+        <img src="{% static 'portfolio/img/degree.jpg' %}" alt="Bachelor's Degree">
+    </div>
+</div>
+
+<script>
+function openDegree() {
+    document.getElementById('degree-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeDegree() {
+    document.getElementById('degree-modal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDegree(); });
+</script>
+
+{% endblock %}

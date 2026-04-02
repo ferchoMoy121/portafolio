@@ -1,0 +1,270 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% block title %}Projects | Fernando Priego{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">My <span>Projects</span></h2>
+        <div class="section-line"></div>
+
+        <!-- AWS PROJECTS FEATURED SECTION -->
+        <div class="projects-section-label">
+            <span class="ps-icon">☁</span>
+            <h3>AWS Cloud Architecture</h3>
+        </div>
+
+        <div class="projects-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-bottom:3rem;">
+
+            <!-- AWS BGP -->
+            <div class="project-card">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border);">
+                    <img src="{% static 'portfolio/img/aws-architecture.png' %}"
+                         alt="BGP Optimization"
+                         style="width:100%; height:180px; object-fit:cover; object-position:top left; display:block;">
+                    <div class="project-category">AWS Networking</div>
+                </div>
+                <div class="project-content">
+                    <h3>AWS Hybrid Network – BGP Optimization</h3>
+                    <p>Resolved routing asymmetry between Direct Connect and VPN using BGP community tagging to control Local Preference in Transit Gateway.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-blue">BGP</span>
+                        <span class="tag tag-blue">Direct Connect</span>
+                        <span class="tag tag-blue">Transit Gateway</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'aws-bgp-optimization' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AWS 3-TIER HA -->
+            <div class="project-card">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border);">
+                    <img src="{% static 'portfolio/img/aws-3tier-ha.png' %}"
+                         alt="3-Tier HA"
+                         style="width:100%; height:180px; object-fit:cover; object-position:top; display:block;">
+                    <div class="project-category">AWS Architecture</div>
+                </div>
+                <div class="project-content">
+                    <h3>3-Tier App — High Availability</h3>
+                    <p>Solved session persistence at scale with ElastiCache Redis. Zero session drops during Auto Scaling. 1K → 50K concurrent users.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-blue">ECS Fargate</span>
+                        <span class="tag tag-blue">Aurora Multi-AZ</span>
+                        <span class="tag tag-blue">ElastiCache</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'aws-3tier-ha' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AWS SERVERLESS -->
+            <div class="project-card">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border);">
+                    <img src="{% static 'portfolio/img/aws-serverless.png' %}"
+                         alt="Serverless"
+                         style="width:100%; height:180px; object-fit:cover; object-position:top; display:block;">
+                    <div class="project-category">Serverless</div>
+                </div>
+                <div class="project-content">
+                    <h3>Serverless Real-Time Event Processing</h3>
+                    <p>100K concurrent events/second from IoT sensors. 72% cost reduction vs EC2. Zero dropped events with SQS DLQ.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-blue">Lambda</span>
+                        <span class="tag tag-blue">API Gateway</span>
+                        <span class="tag tag-blue">DynamoDB</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'aws-serverless' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AWS DR -->
+            <div class="project-card">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border);">
+                    <img src="{% static 'portfolio/img/aws-disaster-recovery.png' %}"
+                         alt="Disaster Recovery"
+                         style="width:100%; height:180px; object-fit:cover; object-position:top; display:block;">
+                    <div class="project-category">Disaster Recovery</div>
+                </div>
+                <div class="project-content">
+                    <h3>Multi-Region Disaster Recovery</h3>
+                    <p>RTO &lt; 15 min, RPO &lt; 1 min for $2M/hour financial platform. Pilot Light strategy at 77% lower cost than active-active.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-blue">Aurora Global</span>
+                        <span class="tag tag-blue">Route 53</span>
+                        <span class="tag tag-blue">EKS</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'aws-disaster-recovery' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AWS SECURITY -->
+            <div class="project-card">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border);">
+                    <img src="{% static 'portfolio/img/aws-security-governance.png' %}"
+                         alt="Security Governance"
+                         style="width:100%; height:180px; object-fit:cover; object-position:top; display:block;">
+                    <div class="project-category">Security & Compliance</div>
+                </div>
+                <div class="project-content">
+                    <h3>AWS Security & Governance</h3>
+                    <p>12-account HIPAA org. 340 IAM users → SSO. MTTD: 8h → 4 min. MTTR: 3 days → 8 min. HIPAA audit passed.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-blue">GuardDuty</span>
+                        <span class="tag tag-blue">Security Hub</span>
+                        <span class="tag tag-blue">Control Tower</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'aws-security-governance' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- DEVOPS & AUTOMATION SECTION -->
+        <div class="projects-section-label">
+            <span class="ps-icon">🐳</span>
+            <h3>DevOps & Automation</h3>
+        </div>
+
+        <div class="projects-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-bottom:3rem;">
+
+            <!-- PORTFOLIO PROJECT -->
+            <div class="project-card">
+                <div class="project-img-wrapper project-img-placeholder" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:center;">
+                    <span class="placeholder-icon">🌐</span>
+                    <div class="project-category">Practical Engineering with AI</div>
+                </div>
+                <div class="project-content">
+                    <h3>Technical Portfolio — Django & Render Deploy</h3>
+                    <p>Full portfolio built with Django and pure CSS/HTML — no frontend frameworks. Developed using AI as a productivity copilot. 10 technical projects deployed on Render.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-purple">Django</span>
+                        <span class="tag tag-purple">Python</span>
+                        <span class="tag tag-purple">WhiteNoise</span>
+                        <span class="tag tag-purple">Render</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'containerized-portfolio' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FACE RECOGNITION -->
+            <div class="project-card">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border);">
+                    <img src="{% static 'portfolio/img/face-recognition.png' %}"
+                         alt="Face Recognition Attendance System"
+                         style="width:100%; height:180px; object-fit:cover; object-position:top; display:block;">
+                    <div class="project-category">Python & AI</div>
+                </div>
+                <div class="project-content">
+                    <h3>Face Recognition Attendance System</h3>
+                    <p>Employee check-in via facial recognition on macOS M1. Debugged 4 silent platform-specific bugs. Proof: real CSV log with 2 employees detected.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-purple">Python</span>
+                        <span class="tag tag-purple">OpenCV</span>
+                        <span class="tag tag-purple">dlib</span>
+                        <span class="tag tag-purple">NumPy</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'face-recognition-assistant' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NETWORK AUTOMATION -->
+            <div class="project-card">
+                <div class="project-img-wrapper project-img-placeholder" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:center;">
+                    <span class="placeholder-icon">🤖</span>
+                    <div class="project-category">Automation</div>
+                </div>
+                <div class="project-content">
+                    <h3>Network Automation with Python & Ansible</h3>
+                    <p>Automated network provisioning across hybrid cloud. 70% reduction in manual configuration time. Zero configuration drift.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-teal">Python</span>
+                        <span class="tag tag-teal">Ansible</span>
+                        <span class="tag tag-teal">Netmiko</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'network-automation' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ELK STACK -->
+            <div class="project-card">
+                <div class="project-img-wrapper project-img-placeholder" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:center;">
+                    <span class="placeholder-icon">📊</span>
+                    <div class="project-category">Automation</div>
+                </div>
+                <div class="project-content">
+                    <h3>ELK Stack Automated Deployment</h3>
+                    <p>Zero to full ELK stack in 4 min with a single make up. Makefile orchestrates sequential health checks, index templates, and Kibana dashboard import. Zero race conditions.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-teal">Elasticsearch</span>
+                        <span class="tag tag-teal">Logstash</span>
+                        <span class="tag tag-teal">Kibana</span>
+                        <span class="tag tag-teal">Makefile</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'elk-stack-deployment' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- NETWORKING SECTION -->
+        <div class="projects-section-label">
+            <span class="ps-icon">🌐</span>
+            <h3>Networking & Hybrid Infrastructure</h3>
+        </div>
+
+        <div class="projects-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;">
+
+            <!-- SD-WAN HYBRID LAB -->
+            <div class="project-card">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); background:#1a1d27;">
+                    <img src="{% static 'portfolio/img/sdwan-hybrid-lab.svg' %}"
+                         alt="SD-WAN Hybrid Lab"
+                         style="width:100%; height:180px; object-fit:contain; object-position:center; display:block; padding:8px;">
+                    <div class="project-category">Networking</div>
+                </div>
+                <div class="project-content">
+                    <h3>SD-WAN Hybrid Lab — PyATS Validation</h3>
+                    <p>Cisco ISR branches → AWS Transit Gateway via GRE. PyATS + Genie validates BGP adjacencies and tunnel state before/after topology changes. 45 min CLI → single CI command.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-teal">PyATS</span>
+                        <span class="tag tag-teal">Cisco vManage</span>
+                        <span class="tag tag-blue">CloudFormation</span>
+                        <span class="tag tag-blue">Transit Gateway</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-progress">In Progress</span>
+                        <a href="{% url 'project_detail' 'sdwan-hybrid-lab' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

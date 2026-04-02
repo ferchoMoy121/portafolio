@@ -1,0 +1,94 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% block title %}Contact | Fernando Priego{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Get In <span>Touch</span></h2>
+        <div class="section-line"></div>
+
+        <div class="contact-grid">
+
+            <!-- LEFT: info -->
+            <div class="contact-info">
+                <p class="contact-intro">
+                    I'm currently open to new opportunities. Whether you have a question,
+                    a project in mind, or just want to connect — feel free to reach out!
+                </p>
+
+                <div class="contact-details">
+                    <div class="contact-detail-item">
+                        <span class="contact-detail-icon">📍</span>
+                        <div>
+                            <span class="contact-detail-label">Location</span>
+                            <span class="contact-detail-value">Tlalnepantla, Estado de México</span>
+                        </div>
+                    </div>
+                    <div class="contact-detail-item">
+                        <span class="contact-detail-icon">✉</span>
+                        <div>
+                            <span class="contact-detail-label">Email</span>
+                            <a href="mailto:fernandopriego1994@gmail.com" class="contact-detail-value">
+                                fernandopriego1994@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contact-detail-item">
+                        <span class="contact-detail-icon">📱</span>
+                        <div>
+                            <span class="contact-detail-label">Phone</span>
+                            <span class="contact-detail-value">+52 (55) 5530383452</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-availability">
+                    <span class="availability-dot"></span>
+                    Available for new opportunities
+                </div>
+            </div>
+
+            <!-- RIGHT: formulario -->
+            <div class="contact-form-wrapper">
+                <form class="contact-form" id="contact-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="Job opportunity / Project / Question">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Send Message</button>
+                    <div id="form-success" class="form-success" style="display:none;">
+                        ✓ Message sent successfully! I'll get back to you soon.
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('form-success').style.display = 'block';
+    this.reset();
+    setTimeout(() => {
+        document.getElementById('form-success').style.display = 'none';
+    }, 5000);
+});
+</script>
+
+{% endblock %}

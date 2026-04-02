@@ -1,0 +1,59 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Fernando Priego | Network & Cloud Specialist{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <p class="hero-greeting">Hi, I'm</p>
+                <h1 class="hero-name">Fernando Priego <span>Aguillon</span></h1>
+                <h2 class="hero-title">Networking & Hybrid Infrastructure Specialist</h2>
+                <p class="hero-sub">AWS Certified Advanced Networking – Specialty &nbsp;|&nbsp; AWS Solutions Architect – Associate</p>
+                <p class="hero-desc">
+                    Network professional with 6+ years of experience in enterprise infrastructure,
+                    specializing in AWS Cloud Architecture, hybrid environments, and network automation.
+                </p>
+                <div class="hero-buttons">
+                    <a href="{% url 'experience' %}" class="btn-primary">View Experience</a>
+                    <a href="{% url 'contact' %}" class="btn-outline">Contact Me</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-img-wrapper">
+                    <img src="{% static 'portfolio/img/profile.jpg' %}" alt="Fernando Priego">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- QUICK STATS -->
+<section class="stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">6+</span>
+                <span class="stat-label">Years of Experience</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">2</span>
+                <span class="stat-label">AWS Certifications</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">4</span>
+                <span class="stat-label">Companies</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">9</span>
+                <span class="stat-label">Total Badges</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

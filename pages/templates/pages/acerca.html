@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acerca de</title>
+    <link rel="stylesheet" href="{% static 'pages/styles.css' %}">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'homepage' %}">Inicio</a> |
+        <a href="{% url 'acerca' %}">Acerca de</a>
+    </nav>
+    <h1>Acerca de mí</h1>
+    <p>Esta es mi segunda página creada con Django.</p>
+</body>
+</html>

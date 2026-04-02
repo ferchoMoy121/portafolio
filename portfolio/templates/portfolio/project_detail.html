@@ -1,0 +1,191 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% block title %}{{ project.title }} | Fernando Priego{% endblock %}
+
+{% if project.code_python %}
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+{% endblock %}
+{% endif %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+
+        <a href="{% url 'projects' %}" class="detail-back">← Back to Projects</a>
+
+        <div class="detail-header">
+            <div>
+                <span class="detail-category">{{ project.category }}</span>
+                <h1 class="detail-title">{{ project.title }}</h1>
+                <div class="detail-meta">
+                    <span class="project-status {% if project.status == 'Completed' %}status-done{% else %}status-progress{% endif %}">
+                        {{ project.status }}
+                    </span>
+                    <div class="project-tags" style="margin:0;">
+                        {% for tag in project.tags %}
+                            <span class="tag tag-blue">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if project.image %}
+        <div class="detail-image">
+            <img src="{% static project.image %}" alt="{{ project.title }}">
+        </div>
+        {% endif %}
+
+        <!-- STORY SECTIONS -->
+        <div class="detail-story">
+            {% for section in project.sections %}
+            <div class="story-card story-{{ section.type }}">
+                <div class="story-card-header">
+                    <span class="story-icon">{{ section.icon }}</span>
+                    <h3 class="story-card-title">{{ section.label }}</h3>
+                </div>
+                <p class="story-card-content">{{ section.content }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- PROMPT ENGINEERING STORY (only if project has it) -->
+        {% if project.prompt_story %}
+        <div class="prompt-story">
+            <h3 class="detail-notes-title">🧠 Practical Engineering with AI — The 3-Prompt Process</h3>
+            <p class="prompt-story-sub">How iterative AI-assisted prompting built this system from scratch to production-ready.</p>
+            <div class="prompt-iterations">
+                {% for step in project.prompt_story %}
+                <div class="prompt-item">
+                    <div class="prompt-number">{{ step.number }}</div>
+                    <div class="prompt-body">
+                        <div class="prompt-label">{{ step.label }}</div>
+                        <p class="prompt-desc">{{ step.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- CODE TABS (only if project has code) -->
+        {% if project.code_python %}
+        <div class="detail-code-section">
+            <h3 class="detail-notes-title">💻 Source Code</h3>
+            <div class="code-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="python">sistema_asistencia_2.py</button>
+                    {% if project.code_csv %}
+                    <button class="tab-btn" data-tab="csv">registro_asistencia.csv</button>
+                    {% endif %}
+                </div>
+
+                <div class="tab-content active" id="tab-python">
+                    <button class="copy-btn" data-target="code-python-block">Copy</button>
+                    <pre id="code-python-block"><code class="language-python">{{ project.code_python }}</code></pre>
+                </div>
+
+                {% if project.code_csv %}
+                <div class="tab-content" id="tab-csv">
+                    <button class="copy-btn" data-target="code-csv-block">Copy</button>
+                    <pre id="code-csv-block"><code class="language-csv">{{ project.code_csv }}</code></pre>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- ARCHITECTURE NOTES -->
+        {% if project.architecture_notes %}
+        <div class="detail-notes">
+            <h3 class="detail-notes-title">🏗 Key Architecture Decisions</h3>
+            <div class="notes-grid">
+                {% for note in project.architecture_notes %}
+                <div class="note-item">
+                    <span class="note-bullet">→</span>
+                    <span>{{ note }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- TECH STACK -->
+        <div class="detail-tech">
+            <h3 class="detail-notes-title">🛠 Technologies Used</h3>
+            <div class="project-tags" style="margin-top:1rem;">
+                {% for t in project.tech %}
+                    <span class="tag tag-teal">{{ t }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- INTERVIEW PREP CARD -->
+        <div class="detail-interview-card">
+            <div class="interview-card-header">
+                <span>💼</span>
+                <h3>Interview Talking Points</h3>
+            </div>
+            <p class="interview-card-sub">Key points to highlight when presenting this project:</p>
+            <div class="interview-points">
+                <div class="interview-point">
+                    <span class="ip-label">Problem</span>
+                    <span class="ip-text">{{ project.sections.0.content|truncatechars:120 }}</span>
+                </div>
+                <div class="interview-point">
+                    <span class="ip-label">Decision</span>
+                    <span class="ip-text">Chose {{ project.tags.0 }} because it directly solves the core problem at scale with managed infrastructure.</span>
+                </div>
+                <div class="interview-point">
+                    <span class="ip-label">Result</span>
+                    <span class="ip-text">{{ project.sections.3.content|truncatechars:120 }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-footer">
+            <a href="{% url 'projects' %}" class="btn-outline">← All Projects</a>
+            <a href="{% url 'contact' %}" class="btn-primary">Contact Me</a>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+
+{% if project.code_python %}
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script>
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const tabId = btn.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + tabId).classList.add('active');
+    });
+});
+
+// Copy to clipboard
+document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const targetId = btn.dataset.target;
+        const code = document.getElementById(targetId).innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            btn.textContent = 'Copied!';
+            btn.style.background = 'var(--accent2)';
+            btn.style.color = '#0f1117';
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 2000);
+        });
+    });
+});
+</script>
+{% endblock %}
+{% endif %}

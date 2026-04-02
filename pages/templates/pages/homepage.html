@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Web con Django</title>
+    <link rel="stylesheet" href="{% static 'pages/styles.css' %}">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'homepage' %}">Inicio</a> |
+        <a href="{% url 'acerca' %}">Acerca de</a>
+    </nav>
+    <h1>¡Bienvenido a mi sitio web!</h1>
+    <p>Esta página usa un template HTML real de Django.</p>
+</body>
