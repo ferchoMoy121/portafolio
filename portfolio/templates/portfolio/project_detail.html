@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}{{ project.title }} | Fernando Priego{% endblock %}
 
-{% if project.code_python %}
+{% if project.code_python or project.code_boto3 %}
 {% block extra_head %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
 {% endblock %}
@@ -96,6 +96,18 @@
         </div>
         {% endif %}
 
+        <!-- PIPELINE DIAGRAM (optional second diagram) -->
+        {% if project.pipeline_image %}
+        <div class="detail-diagram-section" style="margin:2rem 0;">
+            <h3 class="detail-notes-title">📊 Observability Pipeline — Flow Diagram</h3>
+            <div style="background:#0d1117; border-radius:10px; border:1px solid var(--border); padding:1rem; margin-top:1rem; text-align:center;">
+                <img src="{% static project.pipeline_image %}"
+                     alt="Logstash Pipeline Diagram"
+                     style="width:100%; max-width:900px; height:auto; display:inline-block;">
+            </div>
+        </div>
+        {% endif %}
+
         <!-- ARCHITECTURE NOTES -->
         {% if project.architecture_notes %}
         <div class="detail-notes">
@@ -107,6 +119,31 @@
                     <span>{{ note }}</span>
                 </div>
                 {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- MULTI-FILE CODE TABS (boto3 + logstash) -->
+        {% if project.code_boto3 %}
+        <div class="detail-code-section">
+            <h3 class="detail-notes-title">💻 Source Code</h3>
+            <div class="code-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="boto3">bgp_monitor.py</button>
+                    {% if project.code_logstash %}
+                    <button class="tab-btn" data-tab="logstash">logstash_pipeline.conf</button>
+                    {% endif %}
+                </div>
+                <div class="tab-content active" id="tab-boto3">
+                    <button class="copy-btn" data-target="code-boto3-block">Copy</button>
+                    <pre id="code-boto3-block"><code class="language-python">{{ project.code_boto3 }}</code></pre>
+                </div>
+                {% if project.code_logstash %}
+                <div class="tab-content" id="tab-logstash">
+                    <button class="copy-btn" data-target="code-logstash-block">Copy</button>
+                    <pre id="code-logstash-block"><code class="language-ruby">{{ project.code_logstash }}</code></pre>
+                </div>
+                {% endif %}
             </div>
         </div>
         {% endif %}
@@ -153,10 +190,11 @@
 </section>
 {% endblock %}
 
-{% if project.code_python %}
+{% if project.code_python or project.code_boto3 %}
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-ruby.min.js"></script>
 <script>
 // Tab switching
 document.querySelectorAll('.tab-btn').forEach(btn => {

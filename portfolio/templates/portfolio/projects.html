@@ -240,25 +240,26 @@
 
         <div class="projects-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;">
 
-            <!-- SD-WAN HYBRID LAB -->
+            <!-- SD-WAN + TGW OBSERVABILITY -->
             <div class="project-card">
-                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); background:#1a1d27;">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); background:#0d1117;">
                     <img src="{% static 'portfolio/img/sdwan-hybrid-lab.svg' %}"
-                         alt="SD-WAN Hybrid Lab"
+                         alt="SD-WAN TGW Observability"
                          style="width:100%; height:180px; object-fit:contain; object-position:center; display:block; padding:8px;">
-                    <div class="project-category">Networking</div>
+                    <div class="project-category">Hybrid Environments</div>
                 </div>
                 <div class="project-content">
-                    <h3>SD-WAN Hybrid Lab — PyATS Validation</h3>
-                    <p>Cisco ISR branches → AWS Transit Gateway via GRE. PyATS + Genie validates BGP adjacencies and tunnel state before/after topology changes. 45 min CLI → single CI command.</p>
+                    <h3>SD-WAN + TGW Observability — OpenSearch Lab</h3>
+                    <p>Proposed full-stack observability based on real SD-WAN incidents. boto3 + Netmiko automate TGW Connect + Cisco CSR config. 4-input Logstash pipeline feeds OpenSearch. Kinesis Firehose for real-time VPC Flow Logs (&lt;60s latency).</p>
                     <div class="project-tags">
-                        <span class="tag tag-teal">PyATS</span>
-                        <span class="tag tag-teal">Cisco vManage</span>
-                        <span class="tag tag-blue">CloudFormation</span>
-                        <span class="tag tag-blue">Transit Gateway</span>
+                        <span class="tag tag-teal">boto3</span>
+                        <span class="tag tag-teal">Netmiko</span>
+                        <span class="tag tag-blue">Logstash</span>
+                        <span class="tag tag-blue">OpenSearch</span>
+                        <span class="tag tag-orange">TGW Connect</span>
                     </div>
                     <div class="project-footer">
-                        <span class="project-status status-progress">In Progress</span>
+                        <span class="project-status status-progress">Proposed / Lab</span>
                         <a href="{% url 'project_detail' 'sdwan-hybrid-lab' %}" class="btn-outline btn-sm">View Details</a>
                     </div>
                 </div>

@@ -707,67 +707,175 @@ Margot Robie, 00:33:40''',
     },
 
     'sdwan-hybrid-lab': {
-        'title': 'SD-WAN Hybrid Lab — PyATS Validation',
-        'category': 'Networking',
-        'status': 'In Progress',
-        'tags': ['PyATS', 'Cisco vManage', 'CloudFormation', 'SD-WAN', 'BGP', 'GRE'],
+        'title': 'SD-WAN + TGW Observability — OpenSearch Lab',
+        'category': 'Hybrid Environments',
+        'status': 'Proposed / Lab',
+        'tags': ['boto3', 'Netmiko', 'Logstash', 'OpenSearch', 'TGW Connect', 'BGP', 'GRE', 'CloudFormation'],
         'image': 'portfolio/img/sdwan-hybrid-lab.svg',
-        'summary': 'Hybrid SD-WAN lab connecting on-premise Cisco ISR branches to AWS via Transit Gateway using GRE tunnels. PyATS + Genie validates BGP adjacencies, tunnel state, and route tables before/after topology changes — full network-as-code approach.',
+        'summary': (
+            'Proposed architecture based on real SD-WAN + AWS TGW incidents handled professionally. '
+            'Full-stack observability lab: boto3 automates TGW Connect + GRE peer provisioning, '
+            'Netmiko configures Cisco CSR 1000v via SSH, a 4-input Logstash pipeline normalizes '
+            'Syslog / NetFlow / VPC Flow Logs / CloudWatch into OpenSearch indices, '
+            'and Kinesis Firehose delivers VPC Flow Logs in real time (<60s latency).'
+        ),
         'problem': (
-            'Traditional SD-WAN validation relied on manual CLI checks across vManage, vSmart, '
-            'and edge devices after every topology change. '
-            'No structured way to verify that after a new VPC attachment or BGP policy update, '
-            'all GRE tunnels are UP and adjacencies re-established. '
-            'Configuration drift went undetected until an outage. '
-            '45+ minutes of manual verification after each maintenance window.'
+            'During professional SD-WAN support work, recurring incidents revealed a visibility gap: '
+            'BGP peer flaps between on-prem SD-WAN routers and AWS Transit Gateway were only detected '
+            'after customer-reported outages — not proactively. VPC Flow Logs were not captured on the '
+            'decapsulated ENI (eth1), so real application traffic was invisible. NetFlow and Syslog existed '
+            'in separate silos with no unified search or correlation layer.'
         ),
         'solution': (
-            'PyATS testbed.yaml defines the full topology as code: vManage, vSmart, vBond, ISR nodes. '
-            'Genie learn("bgp") and learn("interface") capture structured device state — no regex. '
-            'Baseline snapshot captured before changes; Diff() generated after. '
-            'Any unexpected state change (tunnel DOWN, missing adjacency) fails the job with exit code 1. '
-            'CloudFormation provisions AWS side: VPC, subnets, TGW attachments, route tables. '
-            'pyats run job is CI/CD ready — integrates directly into GitLab pipeline.'
+            'Design a full-stack hybrid observability system: '
+            '(1) boto3 script provisions TGW Connect Attachment + 2 GRE peers for HA/ECMP + 4 route tables for segmentation; '
+            '(2) Netmiko configures GRE tunnels, BGP, NetFlow export, and Syslog on Cisco CSR 1000v via SSH; '
+            '(3) Logstash 4-input pipeline normalizes all network telemetry into structured OpenSearch indices; '
+            '(4) CloudFormation stack provisions VPC Flow Logs on all 4 VPCs, Kinesis Firehose streaming, '
+            'OpenSearch Service in private VPC with IAM least-privilege auth.'
         ),
         'impact': (
-            'Configuration drift detected in under 2 minutes vs previously undetected until outage. '
-            'Full topology reproducible from testbed.yaml — network-as-code. '
-            '45 min manual CLI validation replaced by single CI command. '
-            'BGP adjacency and tunnel state validated automatically after every topology change.'
+            'Unified observability across all 4 network data sources in a single search plane. '
+            'BGP state changes visible in OpenSearch within 60 seconds of occurrence. '
+            'Decapsulated traffic (eth1 VPC Flow Logs) reveals real application flows hidden inside GRE. '
+            'CloudFormation stack reproducible in any region in under 15 minutes. '
+            'Demonstrates end-to-end hybrid cloud engineering: infrastructure-as-code + network automation + observability.'
         ),
-        'tech': ['PyATS', 'Genie', 'Cisco vManage', 'Cisco vSmart', 'Cisco ISR 4451', 'AWS Transit Gateway', 'CloudFormation', 'BGP', 'GRE', 'SD-WAN'],
+        'tech': [
+            'boto3', 'Netmiko', 'Logstash 8.x', 'OpenSearch Service',
+            'Kinesis Firehose', 'VPC Flow Logs', 'CloudFormation',
+            'AWS Transit Gateway Connect', 'GRE Tunnels', 'BGP (eBGP)',
+            'Cisco CSR 1000v', 'NetFlow v9', 'Python', 'YAML',
+        ],
         'sections': [
             {
                 'icon': '🎯',
-                'label': 'Summary',
+                'label': 'Context — Based on Real Incidents',
                 'type': 'summary',
-                'content': 'Hybrid SD-WAN lab with PyATS-based network state validation. testbed.yaml encodes the full topology as code. Genie parsers validate BGP adjacencies and GRE tunnel state before/after changes — replacing 45 minutes of manual CLI verification with a single CI-ready command.'
+                'content': (
+                    'This is a proposed implementation derived from multiple real SD-WAN + AWS TGW incidents '
+                    'handled during professional cloud support work. The architecture addresses the exact visibility '
+                    'gaps identified in production: BGP peer state blind spots, decapsulated traffic invisibility, '
+                    'and siloed telemetry with no correlation layer. Framed as a full-stack lab proposal.'
+                )
             },
             {
                 'icon': '⚠',
-                'label': 'Problem — Undetected Configuration Drift',
+                'label': 'Problem — Visibility Gaps in Hybrid SD-WAN',
                 'type': 'problem',
-                'content': 'SD-WAN topology changes required manual validation across vManage, vSmart, and edge devices — 45+ minutes per maintenance window. No structured state comparison meant configuration drift went undetected until an outage. Zero CI/CD integration for network changes.'
+                'content': (
+                    'BGP flaps between Cisco SD-WAN edges and AWS TGW were only detected post-outage. '
+                    'VPC Flow Logs on eth0 (GRE outer interface) captured encapsulated protocol-47 packets — '
+                    'useless for application analysis. NetFlow on CSR, Syslog, and CloudWatch events existed '
+                    'in three separate silos. No unified search, no correlation, no real-time alerting.'
+                )
             },
             {
                 'icon': '✓',
-                'label': 'Solution — PyATS + Network-as-Code',
+                'label': 'Solution — 4-Layer Observability Stack',
                 'type': 'solution',
-                'content': 'PyATS testbed.yaml encodes full topology. Genie learn("bgp") and learn("interface") return structured Python objects — no regex parsing. Baseline before change, Diff() after — unexpected delta fails job with exit code 1. CloudFormation manages AWS side. pyats run job integrates into GitLab CI pipeline.'
+                'content': (
+                    'Layer 1 — Infrastructure: boto3 provisions TGW Connect Attachment, 2 GRE peers (HA ECMP), '
+                    '4 segmented route tables. Layer 2 — Device: Netmiko SSH configures GRE tunnels, eBGP, NetFlow '
+                    'export to Logstash, Syslog forwarding. Layer 3 — Pipeline: Logstash consumes 4 inputs '
+                    '(Syslog:514, NetFlow:2055, S3 VPC Flow, CloudWatch TGW), normalizes with grok/date/mutate '
+                    'filters, routes to 4 OpenSearch indices. Layer 4 — Real-time: Kinesis Firehose streams '
+                    'eth1 VPC Flow Logs to OpenSearch with <60s latency.'
+                )
             },
             {
                 'icon': '📈',
-                'label': 'Impact — Network-as-Code',
+                'label': 'Impact — Unified Network Observability',
                 'type': 'impact',
-                'content': 'Drift detected in <2 min vs previously undetected. Full topology reproducible from testbed.yaml. 45 min manual validation → single pyats run job command. BGP adjacency and tunnel state auto-validated after every topology change. CI/CD-ready: exit code 0 only on clean diff.'
+                'content': (
+                    'All 4 telemetry sources unified in one OpenSearch search plane. '
+                    'BGP events correlated with VPC Flow changes in a single query. '
+                    'Decapsulated eth1 traffic reveals real application flows hidden inside GRE encapsulation. '
+                    'Firehose real-time path enables sub-60s alerting vs 10-min S3 batch delay. '
+                    'Full stack reproducible via CloudFormation in any AWS region.'
+                )
             },
         ],
         'architecture_notes': [
-            'testbed.yaml = network topology as code — defines all devices, connections, credentials',
-            'Genie learn() returns structured Python objects — no manual regex parsing of CLI output',
-            'Diff(before, after) highlights exactly which BGP neighbor or tunnel changed state',
-            'PyATS chosen over Netmiko: Netmiko pushes config, PyATS validates state — different tools for different jobs',
-            'GRE tunnel over internet: Cisco ISR 4451 → CSR 1000v in Connect VPC → Transit Gateway',
-        ]
+            'TGW Connect Attachment requires BGP — no static routes supported. GRE is mandatory (protocol 47)',
+            'CSR 1000v dual ENI: eth0 = GRE outer (encapsulated), eth1 = decapsulated inner traffic',
+            'VPC Flow Logs activated on eth1 ENI specifically — not on full VPC — to capture real app traffic',
+            'boto3 chosen for BGP monitoring (describe_transit_gateway_connect_peers) — CloudFormation manages infra, boto3 polls operational state',
+            '4 OpenSearch indices: network-logs (all events), bgp-events, vpc-flow-realtime, netflow-bandwidth',
+            'Logstash IAM auth to private OpenSearch — no public endpoint. Least-privilege via CloudFormation IAM role',
+            'Kinesis Firehose → Lambda transform (gzip decode + JSON parse) → OpenSearch buffering: 5MB or 60s',
+        ],
+        'pipeline_image': 'portfolio/img/logstash-pipeline.svg',
+        'code_boto3': r'''import boto3
+
+ec2 = boto3.client('ec2', region_name='us-east-1')
+PEER_IDS = [
+    'tgw-connect-peer-0abc123',
+    'tgw-connect-peer-0def456'  # HA pair for ECMP
+]
+
+def check_bgp_peers():
+    resp = ec2.describe_transit_gateway_connect_peers(
+        TransitGatewayConnectPeerIds=PEER_IDS
+    )
+    for peer in resp['TransitGatewayConnectPeers']:
+        pid   = peer['TransitGatewayConnectPeerId']
+        state = peer['State']
+        for b in peer['ConnectPeerConfiguration']['BgpConfigurations']:
+            print(f"[{pid}] BGP {b['PeerAddress']} "
+                  f"→ status: {b['BgpStatus']}  "
+                  f"TGW ASN: {b['TransitGatewayAsn']}")
+        print(f"  Attachment state: {state}")
+''',
+        'code_logstash': r'''input {
+  syslog { port => 514  type => "cisco_syslog" }
+  udp    { port => 2055 type => "netflow"      }
+  s3 {
+    bucket   => "vpc-flow-logs-sdwan-lab"
+    region   => "us-east-1"
+    type     => "vpc_flow_logs"
+    interval => 60
+  }
+  cloudwatch_logs {
+    log_group => "/aws/transitgateway/connect"
+    region    => "us-east-1"
+    type      => "tgw_events"
+  }
+}
+
+filter {
+  if [type] == "cisco_syslog" {
+    grok { match => { "message" =>
+      "%{SYSLOGTIMESTAMP:ts} %{HOSTNAME:host} %{GREEDYDATA:msg}" } }
+    date { match => ["ts", "MMM dd HH:mm:ss"] }
+  }
+  if [type] == "netflow" {
+    ruby { code => "event.set('flow', decode_netflow(event.get('message')))" }
+  }
+  mutate {
+    add_field => {
+      "environment" => "sdwan-hybrid-lab"
+      "region"      => "us-east-1"
+    }
+  }
+}
+
+output {
+  opensearch {
+    hosts     => ["https://vpc-opensearch-xxx.us-east-1.es.amazonaws.com"]
+    index     => "network-logs-%{+YYYY.MM.dd}"
+    auth_type => { type => "aws_iam" }
+    region    => "us-east-1"
+  }
+  if [type] == "cisco_syslog" and "BGP" in [message] {
+    opensearch {
+      hosts => ["https://vpc-opensearch-xxx.us-east-1.es.amazonaws.com"]
+      index => "bgp-events"
+      auth_type => { type => "aws_iam" }
+    }
+  }
+}
+''',
     },
 }
+

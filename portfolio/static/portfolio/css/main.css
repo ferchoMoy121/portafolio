@@ -292,6 +292,11 @@ body {
     color: #64ffda;
     border: 1px solid rgba(100, 255, 218, 0.2);
 }
+.tag-orange {
+    background: rgba(251, 146, 60, 0.10);
+    color: #fb923c;
+    border: 1px solid rgba(251, 146, 60, 0.25);
+}
 .tag-purple {
     background: rgba(167, 139, 250, 0.1);
     color: #a78bfa;
