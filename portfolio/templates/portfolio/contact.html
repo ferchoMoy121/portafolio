@@ -41,6 +41,15 @@
                             <span class="contact-detail-value">+52 (55) 5530383452</span>
                         </div>
                     </div>
+                    <div class="contact-detail-item">
+                        <span class="contact-detail-icon">💼</span>
+                        <div>
+                            <span class="contact-detail-label">LinkedIn</span>
+                            <a href="https://linkedin.com/in/fernando-priego-7214301a4" target="_blank" class="contact-detail-value">
+                                linkedin.com/in/fernando-priego-7214301a4
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="contact-availability">
@@ -51,8 +60,9 @@
 
             <!-- RIGHT: formulario -->
             <div class="contact-form-wrapper">
-                <form class="contact-form" id="contact-form">
-                    {% csrf_token %}
+                <form class="contact-form" id="contact-form"
+                      action="https://formspree.io/f/xqegdkbz"
+                      method="POST">
                     <div class="form-group">
                         <label for="name">Full Name</label>
                         <input type="text" id="name" name="name" placeholder="John Doe" required>
@@ -69,6 +79,7 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
                     </div>
+                    <input type="hidden" name="_replyto" value="fernandopriego1994@gmail.com">
                     <button type="submit" class="btn-primary btn-full">Send Message</button>
                     <div id="form-success" class="form-success" style="display:none;">
                         ✓ Message sent successfully! I'll get back to you soon.
@@ -83,11 +94,21 @@
 <script>
 document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    document.getElementById('form-success').style.display = 'block';
-    this.reset();
-    setTimeout(() => {
-        document.getElementById('form-success').style.display = 'none';
-    }, 5000);
+    const form = this;
+    const data = new FormData(form);
+    fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+    }).then(response => {
+        if (response.ok) {
+            document.getElementById('form-success').style.display = 'block';
+            form.reset();
+            setTimeout(() => {
+                document.getElementById('form-success').style.display = 'none';
+            }, 5000);
+        }
+    });
 });
 </script>
 
