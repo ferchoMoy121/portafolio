@@ -448,7 +448,7 @@ PROJECTS = {
         'category': 'Python & AI',
         'status': 'Completed',
         'tags': ['Python', 'OpenCV', 'face_recognition', 'dlib', 'NumPy', 'CSV'],
-        'image': 'portfolio/img/face-recognition.png',
+        'image': 'portfolio/img/face-recognition.jpg',
         'summary': (
             'Employee attendance system that uses facial recognition to automatically log check-ins. '
             'Built with Python, OpenCV and dlib on macOS Apple Silicon (M1). '
