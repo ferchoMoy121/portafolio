@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500">
+  <defs>
+    <style>
+      text { font-family: 'Segoe UI', Consolas, monospace; }
+      .title { font-size:14px; font-weight:bold; fill:#e2e8f0; }
+      .sub   { font-size:9px; fill:#94a3b8; }
+      .label { font-size:11px; font-weight:bold; fill:#e2e8f0; }
+      .mono  { font-size:9px; font-family:Consolas,monospace; fill:#fbbf24; }
+      .small { font-size:9px; fill:#94a3b8; }
+      .ok    { font-size:9px; fill:#4ade80; }
+      .warn  { font-size:9px; fill:#fbbf24; }
+      .head  { font-size:10px; font-weight:bold; letter-spacing:1px; }
+    </style>
+    <marker id="a1" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#a855f7"/></marker>
+    <marker id="a2" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#3b82f6"/></marker>
+    <marker id="a3" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#22c55e"/></marker>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#0d1117"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="500" fill="url(#bg2)" rx="12"/>
+  <rect x="1" y="1" width="898" height="498" fill="none" stroke="#1e293b" stroke-width="1" rx="12"/>
+
+  <text x="450" y="26" text-anchor="middle" class="title">OSPF Multi-Area Design + Automation Flow</text>
+  <text x="450" y="40" text-anchor="middle" class="sub">Area hierarchy · Summarization at ABR · OSPF fine-tuning for SLA · Netmiko deployment + PyATS validation</text>
+
+  <!-- ─── OSPF AREA DIAGRAM (left side) ───────────────────────────── -->
+
+  <!-- Area 0 Backbone -->
+  <ellipse cx="220" cy="140" rx="140" ry="60" fill="#1a0a2e" stroke="#a855f7" stroke-width="2"/>
+  <text x="220" y="128" text-anchor="middle" class="head" style="fill:#c084fc">AREA 0</text>
+  <text x="220" y="143" text-anchor="middle" class="small">Backbone · Core-R1, Core-R2</text>
+  <text x="220" y="157" text-anchor="middle" class="mono">ASN 65000 · 10.0.0.0/8</text>
+
+  <!-- ABR nodes on boundary -->
+  <circle cx="220" cy="200" r="14" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
+  <text x="220" y="205" text-anchor="middle" class="small" style="fill:#7dd3fc;font-size:8px">ABR</text>
+
+  <!-- Area 1 -->
+  <ellipse cx="90" cy="310" rx="85" ry="55" fill="#051510" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="90" y="298" text-anchor="middle" class="head" style="fill:#4ade80;font-size:9px">AREA 1 (Stub)</text>
+  <text x="90" y="312" text-anchor="middle" class="small">Access-A1, Access-A2</text>
+  <text x="90" y="325" text-anchor="middle" class="mono" style="font-size:8px">192.168.10-20.0/24</text>
+  <text x="90" y="337" text-anchor="middle" class="small" style="fill:#166534;font-size:8px">No external LSAs</text>
+
+  <!-- Area 2 -->
+  <ellipse cx="220" cy="340" rx="85" ry="55" fill="#051510" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="220" y="328" text-anchor="middle" class="head" style="fill:#4ade80;font-size:9px">AREA 2 (Stub)</text>
+  <text x="220" y="342" text-anchor="middle" class="small">Access-B1, Access-B2</text>
+  <text x="220" y="355" text-anchor="middle" class="mono" style="font-size:8px">192.168.30.0/24</text>
+  <text x="220" y="367" text-anchor="middle" class="small" style="fill:#166534;font-size:8px">Summary: 192.168.0.0/22</text>
+
+  <!-- Area 3 -->
+  <ellipse cx="350" cy="310" rx="85" ry="55" fill="#051510" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="350" y="298" text-anchor="middle" class="head" style="fill:#4ade80;font-size:9px">AREA 3 (Stub)</text>
+  <text x="350" y="312" text-anchor="middle" class="small">Access-C1, Access-C2</text>
+  <text x="350" y="325" text-anchor="middle" class="mono" style="font-size:8px">192.168.10-30.0/24</text>
+  <text x="350" y="337" text-anchor="middle" class="small" style="fill:#166534;font-size:8px">No type-5 LSAs</text>
+
+  <!-- ABR → Areas arrows -->
+  <line x1="185" y1="213" x2="120" y2="258" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#a2)"/>
+  <line x1="220" y1="214" x2="220" y2="285" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#a2)"/>
+  <line x1="255" y1="213" x2="320" y2="258" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#a2)"/>
+
+  <!-- Summary routes annotations -->
+  <text x="135" y="243" text-anchor="middle" class="small" style="fill:#3b82f6;font-size:8px">summary</text>
+  <text x="243" y="258" text-anchor="middle" class="small" style="fill:#3b82f6;font-size:8px">summary</text>
+  <text x="305" y="243" text-anchor="middle" class="small" style="fill:#3b82f6;font-size:8px">summary</text>
+
+  <!-- Default route from Area 0 -->
+  <text x="90" y="375" text-anchor="middle" class="small" style="fill:#f59e0b;font-size:8px">default via ABR</text>
+  <text x="220" y="405" text-anchor="middle" class="small" style="fill:#f59e0b;font-size:8px">default via ABR</text>
+  <text x="350" y="375" text-anchor="middle" class="small" style="fill:#f59e0b;font-size:8px">default via ABR</text>
+
+  <!-- ─── OSPF FINE-TUNING TABLE (right side) ──────────────────────── -->
+  <rect x="480" y="55" width="400" height="200" rx="8" fill="#0a1628" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="680" y="76" text-anchor="middle" class="head" style="fill:#7dd3fc">OSPF Fine-Tuning for SLA</text>
+  <text x="680" y="90" text-anchor="middle" class="small">Access layer — sub-second convergence</text>
+
+  <!-- Table headers -->
+  <rect x="492" y="97" width="376" height="20" rx="3" fill="#1e3a5f"/>
+  <text x="560" y="111" text-anchor="middle" class="small" style="fill:#7dd3fc">Parameter</text>
+  <text x="720" y="111" text-anchor="middle" class="small" style="fill:#7dd3fc">Default</text>
+  <text x="835" y="111" text-anchor="middle" class="small" style="fill:#7dd3fc">Fine-tuned</text>
+
+  <!-- Rows -->
+  <text x="540" y="133" class="small">Hello Interval</text>
+  <text x="720" y="133" text-anchor="middle" class="mono">10s</text>
+  <text x="835" y="133" text-anchor="middle" class="ok">1s</text>
+
+  <text x="540" y="153" class="small">Dead Interval</text>
+  <text x="720" y="153" text-anchor="middle" class="mono">40s</text>
+  <text x="835" y="153" text-anchor="middle" class="ok">3s</text>
+
+  <text x="540" y="173" class="small">BFD Detection</text>
+  <text x="720" y="173" text-anchor="middle" class="mono">disabled</text>
+  <text x="835" y="173" text-anchor="middle" class="ok">300ms</text>
+
+  <text x="540" y="193" class="small">Reference BW</text>
+  <text x="720" y="193" text-anchor="middle" class="mono">100 Mbps</text>
+  <text x="835" y="193" text-anchor="middle" class="ok">10 Gbps</text>
+
+  <text x="540" y="213" class="small">Max convergence</text>
+  <text x="720" y="213" text-anchor="middle" class="mono">~40-60s</text>
+  <text x="835" y="213" text-anchor="middle" class="ok">&lt;1s (BFD)</text>
+
+  <text x="540" y="233" class="small">LSA type in stub</text>
+  <text x="720" y="233" text-anchor="middle" class="mono">T1+T2+T5</text>
+  <text x="835" y="233" text-anchor="middle" class="ok">T1+T2 only</text>
+
+  <!-- ─── AUTOMATION FLOW ──────────────────────────────────────────── -->
+  <rect x="480" y="270" width="400" height="210" rx="8" fill="#0f1f0a" stroke="#22c55e" stroke-width="1.2"/>
+  <text x="680" y="290" text-anchor="middle" class="head" style="fill:#86efac">Automation Flow — Netmiko + PyATS</text>
+
+  <!-- Step 1 -->
+  <rect x="494" y="300" width="120" height="36" rx="5" fill="#0f2a1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="554" y="314" text-anchor="middle" class="small" style="fill:#86efac">① Read topology</text>
+  <text x="554" y="326" text-anchor="middle" class="mono">devices.yaml</text>
+
+  <line x1="614" y1="318" x2="632" y2="318" stroke="#22c55e" stroke-width="1.2" marker-end="url(#a3)"/>
+
+  <!-- Step 2 -->
+  <rect x="634" y="300" width="120" height="36" rx="5" fill="#0f2a1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="694" y="314" text-anchor="middle" class="small" style="fill:#86efac">② Generate config</text>
+  <text x="694" y="326" text-anchor="middle" class="mono">Jinja2 templates</text>
+
+  <line x1="754" y1="318" x2="772" y2="318" stroke="#22c55e" stroke-width="1.2" marker-end="url(#a3)"/>
+
+  <!-- Step 3 -->
+  <rect x="774" y="300" width="96" height="36" rx="5" fill="#0f2a1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="822" y="314" text-anchor="middle" class="small" style="fill:#86efac">③ SSH deploy</text>
+  <text x="822" y="326" text-anchor="middle" class="mono">Netmiko</text>
+
+  <!-- Step 4 -->
+  <rect x="494" y="356" width="180" height="36" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="1"/>
+  <text x="584" y="370" text-anchor="middle" class="small" style="fill:#a5b4fc">④ Wait convergence (60s)</text>
+  <text x="584" y="382" text-anchor="middle" class="mono">OSPF hellos stabilize</text>
+
+  <line x1="822" y1="336" x2="822" y2="374" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="822" y1="374" x2="676" y2="374" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a3)"/>
+
+  <!-- Step 5 -->
+  <rect x="688" y="356" width="178" height="36" rx="5" fill="#1e0a3c" stroke="#a855f7" stroke-width="1"/>
+  <text x="777" y="370" text-anchor="middle" class="small" style="fill:#d8b4fe">⑤ PyATS validate</text>
+  <text x="777" y="382" text-anchor="middle" class="mono">Genie learn("ospf")</text>
+
+  <!-- Step 6 pass/fail -->
+  <rect x="494" y="412" width="176" height="52" rx="5" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+  <text x="582" y="428" text-anchor="middle" class="ok">✅ PASS — diff clean</text>
+  <text x="582" y="442" text-anchor="middle" class="small">All neighbors established</text>
+  <text x="582" y="454" text-anchor="middle" class="small">Routes match baseline</text>
+
+  <rect x="690" y="412" width="176" height="52" rx="5" fill="#2d0a0a" stroke="#ef4444" stroke-width="1"/>
+  <text x="778" y="428" text-anchor="middle" class="warn">❌ FAIL — diff detected</text>
+  <text x="778" y="442" text-anchor="middle" class="small">Unexpected neighbor state</text>
+  <text x="778" y="454" text-anchor="middle" class="small">Exit code 1 → CI/CD alert</text>
+
+  <line x1="584" y1="392" x2="584" y2="412" stroke="#22c55e" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="777" y1="392" x2="777" y2="412" stroke="#ef4444" stroke-width="1" marker-end="url(#a1)"/>
+
+  <!-- Inter-VLAN note -->
+  <rect x="480" y="490" width="400" height="0" rx="4" fill="none"/>
+</svg>

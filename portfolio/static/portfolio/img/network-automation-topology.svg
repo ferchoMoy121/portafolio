@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 660" width="980" height="660">
+  <defs>
+    <style>
+      text { font-family: 'Segoe UI', Consolas, monospace; }
+      .title  { font-size:15px; font-weight:bold; fill:#e2e8f0; }
+      .sub    { font-size:10px; fill:#94a3b8; }
+      .label  { font-size:11px; font-weight:bold; fill:#e2e8f0; }
+      .small  { font-size:9px; fill:#94a3b8; }
+      .tag    { font-size:8px; fill:#64748b; }
+      .area   { font-size:10px; font-weight:bold; letter-spacing:1px; }
+      .proto  { font-size:8px; fill:#fbbf24; font-family:Consolas,monospace; }
+    </style>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#475569"/></marker>
+    <marker id="arrR" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#ef4444"/></marker>
+    <marker id="arrG" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#22c55e"/></marker>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#0d1117"/>
+    </linearGradient>
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1a0a2e"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="distGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0a1628"/>
+      <stop offset="100%" style="stop-color:#0f1f38"/>
+    </linearGradient>
+    <linearGradient id="accGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0a1f12"/>
+      <stop offset="100%" style="stop-color:#0f2a1a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="660" fill="url(#bg)" rx="12"/>
+  <rect x="1" y="1" width="978" height="658" fill="none" stroke="#1e293b" stroke-width="1" rx="12"/>
+
+  <!-- Title -->
+  <text x="490" y="28" text-anchor="middle" class="title">3-Layer Hierarchical Network Automation Lab</text>
+  <text x="490" y="44" text-anchor="middle" class="sub">Core (Area 0) · Distribution (ABR + HSRP) · Access (Stub Areas 1-3) · Netmiko + PyATS automation</text>
+
+  <!-- ══ INTERNET / ISP ════════════════════════════════════════════════ -->
+  <rect x="390" y="52" width="200" height="36" rx="6" fill="#1c1917" stroke="#78716c" stroke-width="1.2"/>
+  <text x="490" y="66" text-anchor="middle" class="label" style="fill:#a8a29e">INTERNET / ISP</text>
+  <text x="490" y="80" text-anchor="middle" class="small">Default route 0.0.0.0/0</text>
+  <line x1="490" y1="88" x2="490" y2="108" stroke="#78716c" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+
+  <!-- ══ CORE LAYER ════════════════════════════════════════════════════ -->
+  <rect x="20" y="108" width="940" height="110" rx="8" fill="url(#coreGrad)" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="36" y="126" class="area" style="fill:#c084fc">▸ CORE / NUCLEUS  —  OSPF Area 0 (Backbone)</text>
+  <text x="36" y="140" class="small">Default route redistribution · eBGP stub to ISP · High-speed switching · No end-user traffic</text>
+
+  <!-- Core Router 1 -->
+  <rect x="260" y="148" width="160" height="60" rx="7" fill="#1e0a3c" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="340" y="167" text-anchor="middle" class="label" style="fill:#d8b4fe">Core-R1</text>
+  <text x="340" y="181" text-anchor="middle" class="small">Cisco CSR 1000v</text>
+  <text x="340" y="194" text-anchor="middle" class="proto">OSPF Area 0 · BGP AS 65000</text>
+
+  <!-- Core Router 2 -->
+  <rect x="560" y="148" width="160" height="60" rx="7" fill="#1e0a3c" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="640" y="167" text-anchor="middle" class="label" style="fill:#d8b4fe">Core-R2</text>
+  <text x="640" y="181" text-anchor="middle" class="small">Cisco CSR 1000v</text>
+  <text x="640" y="194" text-anchor="middle" class="proto">OSPF Area 0 · BGP AS 65000</text>
+
+  <!-- Core interconnect -->
+  <line x1="420" y1="178" x2="560" y2="178" stroke="#a855f7" stroke-width="2"/>
+  <text x="490" y="172" text-anchor="middle" class="tag" style="fill:#a855f7">10Gbps backbone link</text>
+
+  <!-- ISP to Core -->
+  <line x1="460" y1="108" x2="340" y2="148" stroke="#78716c" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <line x1="520" y1="108" x2="640" y2="148" stroke="#78716c" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+  <!-- ══ DISTRIBUTION LAYER ════════════════════════════════════════════ -->
+  <rect x="20" y="238" width="940" height="120" rx="8" fill="url(#distGrad)" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="36" y="256" class="area" style="fill:#7dd3fc">▸ DISTRIBUTION  —  ABR (Area 0 + Areas 1/2/3)  ·  Inter-VLAN Routing  ·  HSRP</text>
+  <text x="36" y="270" class="small">Route summarization at ABR · HSRP active/standby pair · SVIs for inter-VLAN · EtherChannel uplinks to core</text>
+
+  <!-- Dist SW D1 (Active) -->
+  <rect x="100" y="280" width="180" height="68" rx="7" fill="#0f1e38" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="190" y="299" text-anchor="middle" class="label" style="fill:#93c5fd">Dist-SW-D1  (HSRP Active)</text>
+  <text x="190" y="314" text-anchor="middle" class="small">Cisco Catalyst 9300</text>
+  <text x="190" y="328" text-anchor="middle" class="proto">ABR: Area 0 ↔ Area 1,2,3</text>
+  <text x="190" y="341" text-anchor="middle" class="small">SVI VLAN 10/20/30 · Priority 110</text>
+
+  <!-- Dist SW D2 (Standby) -->
+  <rect x="700" y="280" width="180" height="68" rx="7" fill="#0f1e38" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="790" y="299" text-anchor="middle" class="label" style="fill:#93c5fd">Dist-SW-D2  (HSRP Standby)</text>
+  <text x="790" y="314" text-anchor="middle" class="small">Cisco Catalyst 9300</text>
+  <text x="790" y="328" text-anchor="middle" class="proto">ABR: Area 0 ↔ Area 1,2,3</text>
+  <text x="790" y="341" text-anchor="middle" class="small">SVI VLAN 10/20/30 · Priority 90</text>
+
+  <!-- HSRP link -->
+  <line x1="280" y1="314" x2="700" y2="314" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="490" y="308" text-anchor="middle" class="tag" style="fill:#f59e0b">HSRP heartbeat · Virtual GW 10.x.x.1</text>
+
+  <!-- Core to Dist links -->
+  <line x1="310" y1="208" x2="190" y2="280" stroke="#6366f1" stroke-width="2"/>
+  <line x1="370" y1="208" x2="790" y2="280" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="630" y1="208" x2="190" y2="280" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="690" y1="208" x2="790" y2="280" stroke="#6366f1" stroke-width="2"/>
+  <text x="285" y="252" text-anchor="middle" class="tag" style="fill:#6366f1">EtherCh LACP</text>
+  <text x="695" y="252" text-anchor="middle" class="tag" style="fill:#6366f1">EtherCh LACP</text>
+
+  <!-- ══ ACCESS LAYER ══════════════════════════════════════════════════ -->
+  <rect x="20" y="378" width="940" height="200" rx="8" fill="url(#accGrad)" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="36" y="396" class="area" style="fill:#86efac">▸ ACCESS LAYER  —  OSPF Stub Areas 1, 2, 3  ·  Inter-VLAN  ·  OSPF fine-tuning for SLA</text>
+  <text x="36" y="410" class="small">Hello:1s / Dead:3s timers · BFD sub-second detection · Stub areas reduce LSA flooding · End devices connected here</text>
+
+  <!-- Area 1 -->
+  <rect x="35" y="418" width="275" height="148" rx="7" fill="#051510" stroke="#22c55e" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="172" y="436" text-anchor="middle" class="area" style="fill:#4ade80;font-size:9px">OSPF AREA 1</text>
+
+  <rect x="50" y="444" width="115" height="52" rx="5" fill="#0f2a1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="107" y="461" text-anchor="middle" class="label" style="fill:#86efac;font-size:10px">Access-SW-A1</text>
+  <text x="107" y="474" text-anchor="middle" class="proto">VLAN 10 (Data)</text>
+  <text x="107" y="485" text-anchor="middle" class="small">hello 1s / dead 3s</text>
+
+  <rect x="180" y="444" width="115" height="52" rx="5" fill="#0f2a1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="237" y="461" text-anchor="middle" class="label" style="fill:#86efac;font-size:10px">Access-SW-A2</text>
+  <text x="237" y="474" text-anchor="middle" class="proto">VLAN 20 (Voice)</text>
+  <text x="237" y="485" text-anchor="middle" class="small">BFD enabled</text>
+
+  <!-- End devices Area 1 -->
+  <rect x="50" y="508" width="115" height="48" rx="4" fill="#0a1a0f" stroke="#166534" stroke-width="1"/>
+  <text x="107" y="525" text-anchor="middle" class="small">PCs · IP Phones</text>
+  <text x="107" y="539" text-anchor="middle" class="tag">192.168.10.0/24</text>
+  <text x="107" y="551" text-anchor="middle" class="tag">192.168.20.0/24</text>
+
+  <rect x="180" y="508" width="115" height="48" rx="4" fill="#0a1a0f" stroke="#166534" stroke-width="1"/>
+  <text x="237" y="525" text-anchor="middle" class="small">VoIP · Printers</text>
+  <text x="237" y="539" text-anchor="middle" class="tag">192.168.20.0/24</text>
+  <text x="237" y="551" text-anchor="middle" class="tag">QoS DSCP marking</text>
+
+  <line x1="107" y1="496" x2="107" y2="508" stroke="#22c55e" stroke-width="1"/>
+  <line x1="237" y1="496" x2="237" y2="508" stroke="#22c55e" stroke-width="1"/>
+
+  <!-- Area 2 -->
+  <rect x="352" y="418" width="276" height="148" rx="7" fill="#051510" stroke="#22c55e" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="490" y="436" text-anchor="middle" class="area" style="fill:#4ade80;font-size:9px">OSPF AREA 2</text>
+
+  <rect x="367" y="444" width="115" height="52" rx="5" fill="#0f2a1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="424" y="461" text-anchor="middle" class="label" style="fill:#86efac;font-size:10px">Access-SW-B1</text>
+  <text x="424" y="474" text-anchor="middle" class="proto">VLAN 30 (Servers)</text>
+  <text x="424" y="485" text-anchor="middle" class="small">hello 1s / dead 3s</text>
+
+  <rect x="497" y="444" width="115" height="52" rx="5" fill="#0f2a1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="554" y="461" text-anchor="middle" class="label" style="fill:#86efac;font-size:10px">Access-SW-B2</text>
+  <text x="554" y="474" text-anchor="middle" class="proto">VLAN 10/30</text>
+  <text x="554" y="485" text-anchor="middle" class="small">BFD enabled</text>
+
+  <rect x="367" y="508" width="245" height="48" rx="4" fill="#0a1a0f" stroke="#166534" stroke-width="1"/>
+  <text x="489" y="525" text-anchor="middle" class="small">Servers · Workstations</text>
+  <text x="489" y="539" text-anchor="middle" class="tag">192.168.30.0/24 (servers)  ·  192.168.10.0/24 (data)</text>
+  <text x="489" y="551" text-anchor="middle" class="tag">OSPF stub: no external LSAs flooded into area</text>
+
+  <line x1="424" y1="496" x2="424" y2="508" stroke="#22c55e" stroke-width="1"/>
+  <line x1="554" y1="496" x2="554" y2="508" stroke="#22c55e" stroke-width="1"/>
+
+  <!-- Area 3 -->
+  <rect x="670" y="418" width="275" height="148" rx="7" fill="#051510" stroke="#22c55e" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="807" y="436" text-anchor="middle" class="area" style="fill:#4ade80;font-size:9px">OSPF AREA 3</text>
+
+  <rect x="685" y="444" width="115" height="52" rx="5" fill="#0f2a1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="742" y="461" text-anchor="middle" class="label" style="fill:#86efac;font-size:10px">Access-SW-C1</text>
+  <text x="742" y="474" text-anchor="middle" class="proto">VLAN 10/20/30</text>
+  <text x="742" y="485" text-anchor="middle" class="small">hello 1s / dead 3s</text>
+
+  <rect x="815" y="444" width="115" height="52" rx="5" fill="#0f2a1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="872" y="461" text-anchor="middle" class="label" style="fill:#86efac;font-size:10px">Access-SW-C2</text>
+  <text x="872" y="474" text-anchor="middle" class="proto">VLAN 10 (Data)</text>
+  <text x="872" y="485" text-anchor="middle" class="small">BFD enabled</text>
+
+  <rect x="685" y="508" width="245" height="48" rx="4" fill="#0a1a0f" stroke="#166534" stroke-width="1"/>
+  <text x="807" y="525" text-anchor="middle" class="small">Mixed: PCs + Phones + Servers</text>
+  <text x="807" y="539" text-anchor="middle" class="tag">All 3 VLANs co-exist in Area 3</text>
+  <text x="807" y="551" text-anchor="middle" class="tag">Inter-VLAN routed at Distribution SVI</text>
+
+  <line x1="742" y1="496" x2="742" y2="508" stroke="#22c55e" stroke-width="1"/>
+  <line x1="872" y1="496" x2="872" y2="508" stroke="#22c55e" stroke-width="1"/>
+
+  <!-- Dist to Access uplinks -->
+  <!-- D1/D2 to Area 1 -->
+  <line x1="140" y1="348" x2="107" y2="418" stroke="#22c55e" stroke-width="1.5"/>
+  <line x1="140" y1="348" x2="237" y2="418" stroke="#22c55e" stroke-width="1.5"/>
+  <line x1="840" y1="348" x2="107" y2="418" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+  <!-- D1/D2 to Area 2 -->
+  <line x1="190" y1="348" x2="424" y2="418" stroke="#22c55e" stroke-width="1.5"/>
+  <line x1="790" y1="348" x2="554" y2="418" stroke="#22c55e" stroke-width="1.5"/>
+  <!-- D1/D2 to Area 3 -->
+  <line x1="240" y1="348" x2="742" y2="418" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="840" y1="348" x2="872" y2="418" stroke="#22c55e" stroke-width="1.5"/>
+
+  <!-- ══ MONITORING / AUTOMATION SIDEBAR ══════════════════════════════ -->
+  <rect x="20" y="590" width="940" height="58" rx="8" fill="#161b22" stroke="#f59e0b" stroke-width="1.2"/>
+  <text x="36" y="610" class="area" style="fill:#fbbf24;font-size:9px">⚙ AUTOMATION + MONITORING STACK</text>
+
+  <!-- Automation tools -->
+  <rect x="36" y="616" width="120" height="24" rx="4" fill="#292524" stroke="#f59e0b" stroke-width="1"/>
+  <text x="96" y="632" text-anchor="middle" class="proto">Netmiko SSH</text>
+
+  <rect x="170" y="616" width="130" height="24" rx="4" fill="#292524" stroke="#a855f7" stroke-width="1"/>
+  <text x="235" y="632" text-anchor="middle" class="proto" style="fill:#c084fc">PyATS + Genie</text>
+
+  <rect x="314" y="616" width="130" height="24" rx="4" fill="#292524" stroke="#3b82f6" stroke-width="1"/>
+  <text x="379" y="632" text-anchor="middle" class="proto" style="fill:#93c5fd">Python topology-as-code</text>
+
+  <rect x="458" y="616" width="110" height="24" rx="4" fill="#292524" stroke="#22c55e" stroke-width="1"/>
+  <text x="513" y="632" text-anchor="middle" class="proto" style="fill:#86efac">ELK Syslog :514</text>
+
+  <rect x="582" y="616" width="130" height="24" rx="4" fill="#292524" stroke="#22c55e" stroke-width="1"/>
+  <text x="647" y="632" text-anchor="middle" class="proto" style="fill:#86efac">SNMP → Prometheus</text>
+
+  <rect x="726" y="616" width="130" height="24" rx="4" fill="#292524" stroke="#22c55e" stroke-width="1"/>
+  <text x="791" y="632" text-anchor="middle" class="proto" style="fill:#86efac">Kibana Dashboards</text>
+
+  <rect x="870" y="616" width="78" height="24" rx="4" fill="#292524" stroke="#f59e0b" stroke-width="1"/>
+  <text x="909" y="632" text-anchor="middle" class="proto">GNS3 Lab</text>
+
+  <!-- Legend -->
+  <line x1="20" y1="654" x2="44" y2="654" stroke="#a855f7" stroke-width="2"/>
+  <text x="49" y="658" class="tag">Core OSPF Area 0</text>
+  <line x1="155" y1="654" x2="179" y2="654" stroke="#3b82f6" stroke-width="2"/>
+  <text x="184" y="658" class="tag">Distribution ABR</text>
+  <line x1="290" y1="654" x2="314" y2="654" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="319" y="658" class="tag">Access primary uplink</text>
+  <line x1="435" y1="654" x2="459" y2="654" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="464" y="658" class="tag">Secondary/redundant link</text>
+  <line x1="590" y1="654" x2="614" y2="654" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="619" y="658" class="tag">HSRP heartbeat</text>
+  <text x="960" y="658" text-anchor="end" class="tag">Fernando Priego — Network Automation Lab</text>
+</svg>

@@ -268,6 +268,31 @@
                 </div>
             </div>
 
+            <!-- NETWORK AUTOMATION 3-LAYER -->
+            <div class="project-card">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); background:#0d1117;">
+                    <img src="{% static 'portfolio/img/network-automation-topology.svg' %}"
+                         alt="3-Layer Network Automation Lab"
+                         style="width:100%; height:180px; object-fit:contain; object-position:top; display:block; padding:6px;">
+                    <div class="project-category">Network Automation</div>
+                </div>
+                <div class="project-content">
+                    <h3>3-Layer Network Automation — OSPF Multi-Area</h3>
+                    <p>Enterprise 3-layer hierarchy automated with Netmiko + PyATS. OSPF multi-area, HSRP, BFD sub-second convergence, inter-VLAN routing via SVIs. ELK Stack monitors Syslog from all devices in real time.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-teal">Netmiko</span>
+                        <span class="tag tag-teal">PyATS</span>
+                        <span class="tag tag-blue">OSPF</span>
+                        <span class="tag tag-blue">HSRP</span>
+                        <span class="tag tag-orange">BFD</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-progress">Proposed / Lab</span>
+                        <a href="{% url 'project_detail' 'network-automation-lab' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
