@@ -142,7 +142,7 @@
   <text x="635" y="390" text-anchor="middle" class="desc">grep exit 0 (found)   → echo "❌ Elasticsearch aún existe"</text>
   <text x="635" y="404" text-anchor="middle" class="desc">grep exit 1 (not found) → echo "✅ Elasticsearch eliminado"</text>
   <text x="635" y="420" text-anchor="middle" class="desc">Same pattern repeated for: kibana · logstash · 3 Docker images</text>
-  <text x="635" y="436" text-anchor="middle" class="desc" style="fill:#fbbf24">Shell &&/|| short-circuit = no if/else needed — idiomatic Makefile</text>
+  <text x="635" y="436" text-anchor="middle" class="desc" style="fill:#fbbf24">Shell &amp;&amp;/|| short-circuit = no if/else needed — idiomatic Makefile</text>
 
   <!-- ─── ROW 6: make help ──────────────────────────────────────────── -->
   <line x1="90" y1="468" x2="90" y2="482" stroke="#a78bfa" stroke-width="1"/>
