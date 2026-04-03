@@ -877,5 +877,141 @@ output {
 }
 ''',
     },
+
+    'elk-stack-deployment': {
+        'title': 'Monitoring Lab — Prometheus + ELK Stack via Make',
+        'category': 'DevOps & Observability',
+        'status': 'Completed',
+        'tags': ['Docker', 'Make', 'Elasticsearch', 'Logstash', 'Kibana', 'Prometheus', 'Grafana', 'Redis'],
+        'image': 'portfolio/img/elk-topology.svg',
+        'summary': (
+            'Full monitoring lab with two independent stacks orchestrated by a single Makefile: '
+            'a Prometheus + Grafana stack for real-time metrics (Redis → Redis Exporter → Prometheus → Grafana), '
+            'and an ELK stack v8.12.0 for log ingestion and search (Logstash → Elasticsearch → Kibana). '
+            'Make provides ordered deployment, graceful teardown, and post-operation validation via grep exit codes.'
+        ),
+        'problem': (
+            'Running multiple containerized monitoring services manually creates ordering issues. '
+            'Grafana needs Prometheus running first; shell scripts per service have no dependency awareness. '
+            'After docker-compose down, orphaned images and volumes remain. '
+            'No standard way to verify teardown actually completed.'
+        ),
+        'solution': (
+            'Makefile as single orchestration interface with ordered deployment via recursive $(MAKE) calls, '
+            'per-service and stack-level targets, post-operation validation using grep exit codes, '
+            'self-documenting help target via fgrep parsing, and version-pinned variables.'
+        ),
+        'impact': (
+            'One command deploys the full 4-service Prometheus stack in correct order. '
+            'One command tears down ELK and validates each container and image is fully removed. '
+            'Foundation for the ELK pattern later applied in the SD-WAN + TGW OpenSearch observability project.'
+        ),
+        'tech': [
+            'GNU Make', 'Docker', 'Docker Compose',
+            'Elasticsearch 8.12.0', 'Logstash 8.12.0', 'Kibana 8.12.0',
+            'Prometheus', 'Grafana', 'Redis', 'Redis Exporter',
+            'Bash',
+        ],
+        'sections': [
+            {
+                'icon': '🎯',
+                'label': 'What It Is — Two Monitoring Paradigms',
+                'type': 'summary',
+                'content': (
+                    'Two complementary monitoring stacks in one lab. '
+                    'Prometheus + Grafana handles metrics: numeric time-series data scraped every 15 seconds — '
+                    'perfect for dashboards showing Redis memory usage, hit rate, and connections over time. '
+                    'ELK handles logs: full-text events parsed by Logstash, indexed in Elasticsearch, '
+                    'searchable in Kibana — ideal for debugging, security analysis, and audit trails. '
+                    'The Makefile is the single interface that knows how to orchestrate both stacks.'
+                )
+            },
+            {
+                'icon': '⚠',
+                'label': 'Problem — Ordering, Validation, and Drift',
+                'type': 'problem',
+                'content': (
+                    'Docker Compose depends_on only waits for container start, not application readiness. '
+                    'Running services manually across multiple directories creates ordering errors: '
+                    'Grafana fails silently if Prometheus is not already up. '
+                    'After docker-compose down, orphaned images and volumes remain consuming disk. '
+                    'No standard command to verify teardown actually completed.'
+                )
+            },
+            {
+                'icon': '✓',
+                'label': 'Solution — Make as Orchestrator',
+                'type': 'solution',
+                'content': (
+                    'Each service lives in its own directory with its own docker-compose.yml — isolation over monolith. '
+                    'build_monitor calls $(MAKE) recursively: prometheus → redis → redis-exporter → grafana, '
+                    'guaranteeing correct order. '
+                    'delete_elk validates its own cleanup: grep exit code 0 = still exists → ❌, exit code 1 = clean → ✅. '
+                    'Shell && / || short-circuit replaces if/else — idiomatic and exit-code-driven. '
+                    'make help auto-parses ## comments into usage docs — zero documentation drift.'
+                )
+            },
+            {
+                'icon': '📈',
+                'label': 'Impact — From Lab to Cloud Pattern',
+                'type': 'impact',
+                'content': (
+                    'This lab was the foundation for the ELK observability pattern later applied '
+                    'in the SD-WAN + TGW project at cloud scale with Kinesis Firehose and OpenSearch. '
+                    'Logstash pipeline skills built here — ingest, parse, filter, output — '
+                    'translated directly to the 4-input pipeline consuming Syslog, NetFlow, '
+                    'VPC Flow Logs, and CloudWatch. Make proved that a well-structured Makefile '
+                    'eliminates the need for custom CI scripts in local development workflows.'
+                )
+            },
+        ],
+        'architecture_notes': [
+            'Each service in its own directory + docker-compose.yml — not a monolithic compose file',
+            '$(MAKE) recursive calls enforce deployment order without external orchestrators',
+            'Validation uses grep exit codes: 0 = found (problem) → ❌, 1 = not found (clean) → ✅',
+            '.PHONY prevents Make from treating target names as filesystem files',
+            'ELASTICSEARCH_VERSION = KIBANA_VERSION = LOGSTASH_VERSION = 8.12.0 — version pinning prevents drift',
+            'Prometheus pull model (scrapes /metrics every 15s) vs Logstash push model — two different telemetry paradigms',
+            'make help uses fgrep + sed to parse ## comments — the Makefile is its own documentation',
+        ],
+        'pipeline_image': 'portfolio/img/elk-make-flow.svg',
+        'code_boto3': r'''# ── build_elk: build images + start stack detached ─────────
+build_elk: ## Construye y despliega el stack de ELK
+	@echo "🔨 Construcción de ELK (Elasticsearch - Logstash - Kibana)"
+	cd docker_logs_elk/ && docker-compose build
+	@echo "🚀 Desplegando ELK..."
+	cd docker_logs_elk/ && docker-compose up -d
+	@echo "✅ Contenedores ELK en ejecución:"
+	docker ps --filter status=running
+
+# ── delete_elk: deep clean with post-op validation ─────────
+delete_elk: ## Eliminación profunda del stack de ELK
+	cd docker_logs_elk/ && docker-compose stop
+	cd docker_logs_elk/ && docker-compose down
+	docker rmi docker.elastic.co/elasticsearch/elasticsearch:$(ELASTICSEARCH_VERSION)
+	docker rmi docker.elastic.co/kibana/kibana:$(KIBANA_VERSION)
+	docker rmi docker.elastic.co/logstash/logstash:$(LOGSTASH_VERSION)
+	@docker ps -a --filter name=$(ELASTICSEARCH_CONTAINER) | grep -q $(ELASTICSEARCH_CONTAINER) \
+		&& echo "❌ Elasticsearch aún existe" \
+		|| echo "✅ Elasticsearch eliminado correctamente"
+	@docker images --filter reference=docker.elastic.co/kibana/kibana:$(KIBANA_VERSION) \
+		| grep -q "kibana" \
+		&& echo "❌ Imagen Kibana aún existe" \
+		|| echo "✅ Imagen Kibana eliminada correctamente"
+
+# ── build_monitor: 4-service ordered deployment ─────────────
+build_monitor: ## Levanta todo el stack de monitorización
+	$(MAKE) build_monitor_prometheus
+	$(MAKE) build_monitor_redis
+	$(MAKE) build_monitor_redis_exporter
+	$(MAKE) build_monitor_grafana
+	docker ps -a
+
+# ── help: self-documenting via fgrep ───────────────────────
+help: ## Comando de ayuda
+	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep \
+		| sed -e 's/\\$$//' | sed -e 's/##//'
+''',
+    },
 }
 

@@ -208,20 +208,23 @@
                 </div>
             </div>
 
-            <!-- ELK STACK -->
+            <!-- ELK + PROMETHEUS MONITORING LAB -->
             <div class="project-card">
-                <div class="project-img-wrapper project-img-placeholder" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:center;">
-                    <span class="placeholder-icon">📊</span>
-                    <div class="project-category">Automation</div>
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); background:#0d1117;">
+                    <img src="{% static 'portfolio/img/elk-topology.svg' %}"
+                         alt="ELK + Prometheus Monitoring Lab"
+                         style="width:100%; height:180px; object-fit:contain; object-position:center; display:block; padding:6px;">
+                    <div class="project-category">DevOps & Observability</div>
                 </div>
                 <div class="project-content">
-                    <h3>ELK Stack Automated Deployment</h3>
-                    <p>Zero to full ELK stack in 4 min with a single make up. Makefile orchestrates sequential health checks, index templates, and Kibana dashboard import. Zero race conditions.</p>
+                    <h3>Monitoring Lab — Prometheus + ELK via Make</h3>
+                    <p>Two monitoring stacks orchestrated by a single Makefile: Prometheus + Grafana for metrics, ELK v8.12.0 for logs. Ordered deployment via recursive $(MAKE), post-op validation via grep exit codes.</p>
                     <div class="project-tags">
                         <span class="tag tag-teal">Elasticsearch</span>
                         <span class="tag tag-teal">Logstash</span>
-                        <span class="tag tag-teal">Kibana</span>
-                        <span class="tag tag-teal">Makefile</span>
+                        <span class="tag tag-blue">Prometheus</span>
+                        <span class="tag tag-blue">Grafana</span>
+                        <span class="tag tag-orange">GNU Make</span>
                     </div>
                     <div class="project-footer">
                         <span class="project-status status-done">Completed</span>
