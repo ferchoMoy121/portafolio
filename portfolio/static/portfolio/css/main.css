@@ -735,6 +735,47 @@ a.contact-detail-value:hover { text-decoration: underline; }
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
 }
+
+/* ── Responsive breakpoints ─────────────────────────────── */
+@media (max-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 640px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .project-card {
+        width: 100%;
+    }
+    /* Nav responsive */
+    .nav-links {
+        gap: 1rem;
+    }
+    .nav-links a {
+        font-size: 0.78rem;
+    }
+    /* Hero text */
+    .hero-title {
+        font-size: 2rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    /* Section padding */
+    .section {
+        padding: 4rem 0 2rem;
+    }
+    /* Detail page: stack columns */
+    .detail-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .detail-sections-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
 .project-card {
     background: var(--surface);
     border: 1px solid var(--border);

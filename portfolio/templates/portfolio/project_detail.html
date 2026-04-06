@@ -33,14 +33,8 @@
 
         {% if project.image %}
         <div class="detail-image">
-            {% if project.image|slice:"-4:" == ".svg" %}
-            <object data="{% static project.image %}" type="image/svg+xml"
-                    style="width:100%; max-width:900px; min-height:420px; display:block; margin:0 auto; border:none;">
-                <img src="{% static project.image %}" alt="{{ project.title }}">
-            </object>
-            {% else %}
-            <img src="{% static project.image %}" alt="{{ project.title }}">
-            {% endif %}
+            <img src="{% static project.image %}" alt="{{ project.title }}"
+                 style="width:100%; max-width:900px; height:auto; display:block; margin:0 auto;">
         </div>
         {% endif %}
 
@@ -108,13 +102,9 @@
         <div class="detail-diagram-section" style="margin:2rem 0;">
             <h3 class="detail-notes-title">📊 Observability Pipeline — Flow Diagram</h3>
             <div style="background:#0d1117; border-radius:10px; border:1px solid var(--border); padding:1rem; margin-top:1rem; text-align:center; overflow:hidden;">
-                <object data="{% static project.pipeline_image %}"
-                        type="image/svg+xml"
-                        style="width:100%; max-width:900px; min-height:520px; display:block; margin:0 auto; border:none;">
-                    <img src="{% static project.pipeline_image %}"
-                         alt="Pipeline Flow Diagram"
-                         style="width:100%; max-width:900px;">
-                </object>
+                <img src="{% static project.pipeline_image %}"
+                     alt="Pipeline Flow Diagram"
+                     style="width:100%; max-width:900px; height:auto; display:block; margin:0 auto;">
             </div>
         </div>
         {% endif %}
