@@ -133,6 +133,67 @@
 
         </div>
 
+        <!-- FINTECH APPLIED ARCHITECTURE SECTION -->
+        <div class="projects-section-label">
+            <span class="ps-icon">🏦</span>
+            <h3>Fintech Applied Architecture</h3>
+        </div>
+
+        <div class="projects-grid" style="margin-bottom:3rem;">
+
+            <!-- ZERO TRUST STRATEGY -->
+            <div class="project-card">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); background:#0d1117;">
+                    <img src="{% static 'portfolio/img/vpc-lattice-cloudwan.svg' %}"
+                         alt="Zero Trust Network Strategy — VPC Lattice + Cloud WAN"
+                         style="width:100%; height:180px; object-fit:cover; object-position:left top; display:block;">
+                    <div class="project-category">Zero Trust Architecture</div>
+                </div>
+                <div class="project-content">
+                    <h3>Zero Trust Network Strategy — NACL Baseline to VPC Lattice + Cloud WAN</h3>
+                    <p>3-phase Zero Trust strategy for a fintech multi-app VPC. Phase 1: deny-by-default NACL baseline (immediate, no new infra). Phase 2: VPC Lattice Service Network — each app as pure provider, IAM Auth Policies + SigV4 replacing IP-based access. Phase 3: Cloud WAN network segment as connectivity layer.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-blue">Zero Trust</span>
+                        <span class="tag tag-blue">VPC Lattice</span>
+                        <span class="tag tag-blue">NACL</span>
+                        <span class="tag tag-blue">Cloud WAN</span>
+                        <span class="tag tag-orange">Fintech</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'fintech-zero-trust-nacl' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- COST OBSERVABILITY PIPELINE -->
+            <div class="project-card">
+                <div class="project-img-wrapper" style="height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); background:#0d1117;">
+                    <img src="{% static 'portfolio/img/cost-pipeline.svg' %}"
+                         alt="Network Cost Observability Pipeline"
+                         style="width:100%; height:180px; object-fit:cover; object-position:left top; display:block;">
+                    <div class="project-category">Cost Observability</div>
+                </div>
+                <div class="project-content">
+                    <h3>Network Cost-Observability Pipeline — AI-Driven Analysis</h3>
+                    <p>Serverless pipeline to attribute network costs at service level across a multi-VPC fintech environment. VPC Flow Logs → Kinesis Firehose → S3 → Athena → QuickSight + Bedrock AI reports + SNS alerting. Identified cross-AZ misplacement as top cost driver. Target: 20-30% network cost reduction.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-blue">VPC Flow Logs</span>
+                        <span class="tag tag-blue">Kinesis Firehose</span>
+                        <span class="tag tag-blue">Athena</span>
+                        <span class="tag tag-blue">Bedrock</span>
+                        <span class="tag tag-orange">Fintech</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-status status-done">Completed</span>
+                        <a href="{% url 'project_detail' 'fintech-cost-pipeline' %}" class="btn-outline btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <!-- DEVOPS & AUTOMATION SECTION -->
         <div class="projects-section-label">
             <span class="ps-icon">🐳</span>

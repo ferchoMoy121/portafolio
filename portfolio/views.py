@@ -1189,9 +1189,269 @@ def validate_ospf(testbed_yaml: str) -> bool:
     if failed:
         print(f"FAIL: neighbors not FULL: {failed}")
         return False
-    print("PASS: all OSPF neighbors FULL/DR/BDR")
+    print("PASS: all OSPF neurons FULL/DR/BDR")
     return True
 ''',
     },
+
+    # ── FINTECH APPLIED ARCHITECTURE ────────────────────────────────────────
+
+    'fintech-cost-pipeline': {
+        'title': 'Network Cost-Observability Pipeline — AI-Driven Analysis',
+        'category': 'Fintech Applied Architecture',
+        'status': 'Completed',
+        'tags': ['VPC Flow Logs', 'Kinesis Firehose', 'Lambda', 'Athena', 'QuickSight', 'Bedrock', 'SNS', 'EventBridge', 'CloudFormation', 'Fintech'],
+        'image': 'portfolio/img/cost-pipeline.svg',
+        'summary': (
+            'Built a two-path network cost-observability pipeline for a fintech multi-VPC environment '
+            'where network bills arrived at month-end with no service-level attribution. '
+            'PATH A (real-time, <60s): VPC Flow Logs → CloudWatch Logs → Kinesis Firehose → '
+            'Lambda ETL (cost_usd = bytes × $0.01/GB + IP→service via EC2 describe_network_interfaces) '
+            '→ QuickSight + 2 SNS Topics (ML anomaly alert + cost threshold alert). '
+            'PATH B (weekly): EventBridge Scheduler → Lambda → Athena SQL → Bedrock Claude 3.5 Sonnet '
+            '→ AI optimization report to engineering leadership. '
+            'Root cause identified: application ALB with targets registered only in AZ-a while '
+            'consumer services ran in AZ-b — guaranteed cross-AZ traffic on every request at $0.01/GB. '
+            'Designed as a reusable CloudFormation IaC stack based on 3 AWS reference blog architectures, '
+            'extended with QuickSight anomaly detection, Bedrock AI layer, and dual SNS alerting. '
+            'Pilot-first rollout targeting 20-30% total network cost reduction company-wide.'
+        ),
+        'tech': [
+            'VPC Flow Logs', 'CloudWatch Logs (Subscription Filter)',
+            'Kinesis Data Firehose', 'AWS Lambda (ETL + weekly orchestrator)',
+            'EC2 describe_network_interfaces', 'Amazon S3 (shared data lake)',
+            'AWS Glue Catalog', 'Amazon Athena ($5/TB, no fixed cost)',
+            'Amazon QuickSight (ML anomaly detection)', 'Amazon Bedrock (Claude 3.5 Sonnet)',
+            'Amazon SNS (2 topics)', 'CloudWatch Alarms',
+            'Amazon EventBridge Scheduler', 'CloudFormation IaC',
+        ],
+        'sections': [
+            {
+                'icon': '⚠',
+                'label': 'Problem — Blind Bill, No Attribution, No Alerting',
+                'type': 'problem',
+                'content': (
+                    'A fintech multi-VPC environment had no visibility into network costs at service level. '
+                    'AWS bills arrived at month-end with a total but no breakdown by VPC, service, or traffic type. '
+                    'Root cause discovered through VPC Flow Log analysis: an application ALB had its target '
+                    'registered only in one Availability Zone, while the majority of consumer services ran '
+                    'in the other AZ. Every request generated guaranteed cross-AZ data transfer at $0.01/GB. '
+                    'No alerting existed — cost spikes discovered only at billing review. '
+                    'No company-wide standard for AZ-aware deployments, '
+                    'and no mechanism to identify which services were causing disproportionate transfer costs.'
+                )
+            },
+            {
+                'icon': '✓',
+                'label': 'PATH A — Real-Time Pipeline + Anomaly Detection (<60s)',
+                'type': 'solution',
+                'content': (
+                    'Architecture based on 3 AWS reference blogs, extended with QuickSight and dual SNS alerting. '
+                    'VPC Flow Logs (VPC level, capturing az-id field) → CloudWatch Logs → '
+                    'Kinesis Data Firehose via Subscription Filter (<60s latency, GZIP). '
+                    'Lambda ETL enriches each record: gzip decode, CIDR filter for pilot VPC, '
+                    'cost_usd = bytes × $0.01/GB when src_az ≠ dst_az, '
+                    'and IP → service name via EC2 describe_network_interfaces(). '
+                    'Enriched records → QuickSight (cost_usd by AZ, top offenders, daily trends, ML anomaly detection). '
+                    'Two independent alerting paths: SNS Topic A (QuickSight ML spike → on-call incident platform, immediate page); '
+                    'SNS Topic B (CloudWatch Alarm on cost_usd threshold → ops notification channel). '
+                    'Firehose also writes backup to shared S3 data lake used by PATH B Athena queries.'
+                )
+            },
+            {
+                'icon': '🤖',
+                'label': 'PATH B — Weekly AI Report via Bedrock Claude 3.5',
+                'type': 'solution',
+                'content': (
+                    'EventBridge Scheduler triggers every Monday → Lambda weekly orchestrator '
+                    '(TOP_N configurable via environment variable). '
+                    'Lambda queries Athena against the shared S3 data lake: total cost by VPC, '
+                    'top N offenders by service + AZ direction, cross-AZ vs intra-AZ breakdown by port, '
+                    'peak traffic hours, and intra-VPC vs cross-VPC flow distribution. '
+                    'Athena JSON results sent to Amazon Bedrock (Claude 3.5 Sonnet) with a structured cost prompt. '
+                    'Bedrock returns a natural-language optimization report: which services have mismatched '
+                    'AZ placement, and specific remediation per service (e.g., pin service to AZ-a where ALB target resides). '
+                    'Report delivered to engineering leadership. '
+                    'Validated pilot findings → published as company-wide guidelines → '
+                    'Phase 3 roadmap: central monitoring account consolidating all teams.'
+                )
+            },
+            {
+                'icon': '📈',
+                'label': 'Impact — Root Cause Found, 20-30% Cost Reduction Target',
+                'type': 'impact',
+                'content': (
+                    'Root cause confirmed and quantified: ALB target only in AZ-a, consumers in AZ-b '
+                    '→ $0.01/GB on every request, visible in QuickSight within 60 seconds of traffic. '
+                    'Pipeline delivered: real-time service-level cost attribution, ML-based anomaly '
+                    'detection alerting before manual discovery, weekly AI reports replacing manual '
+                    'Athena query interpretation, and a pilot team cost baseline for company-wide rollout. '
+                    'Reusable CloudFormation IaC: deploys full pipeline to any VPC in minutes. '
+                    'Architecture documented in draw.io as internal company standard. '
+                    'Organizational target: 20-30% total network cost reduction through '
+                    'AZ-pinning corrections and NAT Gateway consolidation across all engineering teams.'
+                )
+            },
+        ],
+        'architecture_notes': [
+            'az-id field in VPC Flow Logs is the key — reveals exact AZ of every packet, enabling cross-AZ cost_usd calculation',
+            'Lambda ETL: cost_usd = bytes × $0.01/GB only when src_az ≠ dst_az — intra-AZ traffic is free and filtered out',
+            'EC2 describe_network_interfaces() resolves private IPs → ENI → service name tag — flow logs only carry IPs, not names',
+            'CloudWatch Logs Subscription Filter used between Flow Logs and Firehose — enables real-time delivery without polling',
+            'Two SNS Topics by design: Topic A (ML anomaly, immediate on-call page) vs Topic B (cost threshold, Slack) — different severity and audience',
+            'Athena at $5/TB with no fixed cost — preferred for batch cost queries where sub-second latency is not required',
+            'Shared S3 data lake: Path A Firehose writes there as backup; Path B Lambda reads from same bucket — single source of truth',
+            'Bedrock requires manual model access activation in AWS console — documented as deployment prerequisite',
+            'Pilot-first rollout: one team validates AZ-pinning fix → cost delta measured → published as mandatory standard for new deployments',
+        ],
+    },
+
+    'fintech-zero-trust-nacl': {
+        'title': 'Zero Trust Network Strategy — NACL Baseline to VPC Lattice + Cloud WAN',
+        'category': 'Fintech Applied Architecture',
+        'status': 'Completed',
+        'tags': ['Zero Trust', 'NACL', 'VPC Lattice', 'Cloud WAN', 'IAM Auth Policy', 'SigV4', 'Fintech', 'AWS'],
+        'image': 'portfolio/img/zero-trust-nacl.svg',
+        'summary': (
+            '3-phase Zero Trust network strategy for a fintech internal-tooling VPC hosting 6 application groups '
+            'across 18 subnets and 11 active VPC peerings. '
+            'Started with a 2-week IaC mapping effort across 4 accounts (DEV/QA/PROD/Core Banking) — '
+            'inventorying all VPC peerings, ALBs, SG-to-SG references between ALBs and ECS tasks, '
+            'and confirmed east-west communication per application group via cross-team coordination. '
+            'Phase 1: deny-by-default NACL baseline — every ALLOW rule derived from SG evidence, not assumptions. '
+            'Phase 2: VPC Lattice Service Network — each app migrates to its own VPC as pure provider, '
+            'IAM Auth Policies (DENY ALL by default) + SigV4 replace IP-based east-west access. '
+            'Phase 3: Cloud WAN network segment as the definitive connectivity layer, replacing the peering matrix entirely.'
+        ),
+        'problem': (
+            'A production VPC hosting 5 engineering application groups across 18 subnets operated with a single '
+            'default NACL — Rule 100 ALLOW ALL from 0.0.0.0/0. Security Groups were the only east-west control. '
+            'The critical finding: one application was connecting directly to another group\'s database on port 3306 '
+            'with no network-layer barrier between them. In a flat-network posture, any misconfigured or compromised '
+            'Security Group would allow unrestricted lateral movement across all 5 application groups — '
+            'a significant blast-radius risk in a regulated fintech environment.'
+        ),
+        'solution': (
+            'Designed a deny-by-default NACL architecture following a per-app-group isolation model: '
+            '(1) Default NACL retained for public NAT Gateway subnets only — no app workloads; '
+            '(2) One custom NACL per application group, scoped to its /23 CIDR block (2 AZ subnets); '
+            '(3) Rule numbering convention: Rules 10-80 explicit ALLOW (confirmed east-west + north-south), '
+            'Rule 90 DENY 10.x.x.x/16 (blocks all unreferenced intra-VPC CIDRs), Rule 100 ALLOW 0.0.0.0/0 '
+            '(internet + ephemeral return traffic). '
+            'All ALLOW rules derived from Security Group inbound/outbound evidence — no assumptions. '
+            'Evaluated and discarded VPC Lattice as an alternative: the VPC acts as both consumer and provider '
+            'simultaneously (inbound services + outbound VPC Peering dependencies), making a pure Lattice model '
+            'architecturally incompatible. NACL provides consistent control across both east-west and north-south flows. '
+            'Full architecture documented in draw.io + companion Excel rule workbook for cross-team adoption.'
+        ),
+        'impact': (
+            'Direct database exposure (port 3306) isolated — only explicitly confirmed flows permitted at network layer. '
+            'Blast-radius reduced: a compromised workload cannot reach other application group subnets '
+            'unless an explicit NACL rule permits it. '
+            'Defense-in-depth established: stateless NACLs operate independently of Security Groups, '
+            'providing a secondary enforcement layer even if SG rules are modified post-compromise. '
+            'All permitted east-west flows are declared as named rules — zero implicit overlaps, full auditability. '
+            'Architecture reviewed and presented to senior DevOps engineering stakeholders with a 3-phase roadmap: '
+            'Phase 1 (NACL baseline) → Phase 2 (VPC Lattice for greenfield provider VPCs) → '
+            'Phase 3 (Cloud WAN segment isolation for production environments).'
+        ),
+        'tech': [
+            'AWS VPC', 'Network ACLs (NACL)', 'Security Groups', 'VPC Peering',
+            'NAT Gateway', 'VPC Lattice (evaluated)', 'Cloud WAN (evaluated)',
+            'VPC Flow Logs', 'draw.io', 'CloudFormation',
+        ],
+        'sections': [
+            {
+                'icon': '🎯',
+                'label': 'Context — 3-Phase Zero Trust Strategy',
+                'type': 'summary',
+                'content': (
+                    '6 application groups shared one /16 VPC with 11 active VPC peerings and a flat allow-all NACL. '
+                    'Zero Trust was not achievable in that topology — IP address was the only identity, '
+                    'any misconfigured Security Group opened lateral movement across all apps. '
+                    'First step: 2 weeks of IaC-driven discovery across 4 accounts (DEV/QA/PROD/Core Banking) '
+                    'to map every VPC peering, ALB, SG inbound/outbound reference between ALBs and ECS tasks, '
+                    'and confirmed east-west flow per application group — coordinating with each team to validate '
+                    'which communications were intentional versus implicit. That inventory became the source of truth '
+                    'for every NACL rule and the prerequisite for the Lattice migration. '
+                    'Phase 1 (immediate) → NACL deny-by-default baseline, no new infrastructure required. '
+                    'Phase 2 (strategic) → VPC Lattice Service Network, each app as pure provider, identity-based access. '
+                    'Phase 3 (definitive) → Cloud WAN network segment replaces the peering matrix entirely.'
+                )
+            },
+            {
+                'icon': '⚠',
+                'label': 'Problem — Flat Network, 11 Peerings, No Identity',
+                'type': 'problem',
+                'content': (
+                    '6 apps sharing one /16 VPC: implicit east-west access on every port, Security Groups as the only control. '
+                    'Critical finding: one app connected directly to another\'s database on port 3306 with no network-layer barrier. '
+                    '11 active VPC peerings (DEV×4, QA×3, PROD×3, CVPN) — non-transitive, each new environment adds more. '
+                    'No Zero Trust: open endpoint policies, no SigV4 signing, IP address was the only identity. '
+                    'A compromised container could reach any service in the VPC — blast-radius was the entire application portfolio.'
+                )
+            },
+            {
+                'icon': '✓',
+                'label': 'Phase 1 — NACL Baseline (Immediate, No New Infra)',
+                'type': 'solution',
+                'content': (
+                    'Deny-by-default NACL per application group (/23 CIDR, 2 AZs): '
+                    'Rules 10-80 explicit ALLOW (derived from Security Group evidence), '
+                    'Rule 90 DENY intra-VPC CIDR (blocks all unreferenced groups), '
+                    'Rule 100 ALLOW 0.0.0.0/0 (internet + ephemeral returns). '
+                    'Every ALLOW rule corresponds to a confirmed SG inbound/outbound reference across the 4 accounts — '
+                    'no assumptions, no guesswork. Mapping process: IaC audit of all peering connections, '
+                    'ALB listener rules, SG references between each ALB and its associated ECS task definitions, '
+                    'cross-validated with the owning application team before any NACL was applied. '
+                    'Deployed with zero new infrastructure. '
+                    'Key output: complete, team-confirmed east-west flow inventory — the prerequisite for Phase 2. '
+                    'Direct DB exposure (port 3306) isolated as highest-priority finding.'
+                )
+            },
+            {
+                'icon': '🕸️',
+                'label': 'Phase 2 — VPC Lattice Pure Provider Architecture',
+                'type': 'solution',
+                'content': (
+                    'Each application migrates to its own isolated VPC as a pure provider — no shared address space. '
+                    'Service Network Endpoint (SN-E) handles all traffic (east-west + north-south). '
+                    'IAM Auth Policies: DENY ALL by default — callers must be listed by IAM role, not by IP. '
+                    'SigV4 on every request: IAM role validated on every call. '
+                    'Auth Policy Matrix: Hub→API Provider ALLOW, Hub→Audit DENY (not listed = 403 Forbidden). '
+                    'East-west flow: DNS (169.254.171.x Lattice link-local) → SG (Lattice prefix) → Auth Policy → ALB. '
+                    'Presented to senior stakeholders as Option B vs A — pilot approved.'
+                )
+            },
+            {
+                'icon': '📈',
+                'label': 'Phase 3 — Cloud WAN Segment + Full Impact',
+                'type': 'impact',
+                'content': (
+                    'Phase 3: Cloud WAN network segment replaces remaining VPC peerings — '
+                    'Lattice becomes the sole east-west control, Cloud WAN handles north-south segmentation. '
+                    'Full impact of the 3-phase strategy: '
+                    'Direct DB exposure eliminated (Phase 1). '
+                    'IAM role = passport — Hub cannot reach Audit even on the same network (Phase 2). '
+                    'Peering matrix (11+ peerings) reduced to zero — one Service Network scales to any environment (Phase 2). '
+                    'VPC transformed from consumer+provider to pure provider — architectural prerequisite for Cloud WAN (Phase 3). '
+                    'Single source of truth for access: IAM Auth Policies as code, auditable, version-controlled.'
+                )
+            },
+        ],
+        'architecture_notes': [
+            '2-week IaC discovery across DEV/QA/PROD/Core Banking — every NACL ALLOW rule derived from confirmed SG evidence, never assumed',
+            'Mapping process: VPC peerings → ALBs → SG inbound/outbound references → ECS task definitions — per application group, cross-validated with teams',
+            'Phase 1 NACL is intentionally temporary — its real value is the east-west flow inventory it produces for Phase 2',
+            'Rule 90 DENY intra-VPC CIDR is the core of deny-by-default — blocks all unreferenced app groups before Rule 100',
+            'VPC Lattice SN-E (Service Network Endpoint): single endpoint for both east-west and north-south traffic',
+            'Pure provider model: VPC has only Service Associations — no VPC Associations consuming other services',
+            'Auth Policies are DENY by default — every caller must be explicitly listed by IAM role per service',
+            'SigV4 requires SDK support in the application — ECS Task Role signs every outbound Lattice request',
+            'Phase 3 Cloud WAN: network segment replaces the peering matrix — Lattice + Cloud WAN = full Zero Trust stack',
+        ],
+        'lattice_diagram': 'portfolio/img/vpc-lattice-cloudwan.svg',
+    },
+
 }
 

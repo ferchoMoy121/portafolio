@@ -97,6 +97,23 @@
         </div>
         {% endif %}
 
+        <!-- VPC LATTICE + CLOUD WAN TARGET ARCHITECTURE DIAGRAM -->
+        {% if project.lattice_diagram %}
+        <div class="detail-diagram-section" style="margin:2rem 0;">
+            <h3 class="detail-notes-title">🕸 Phase 2 + 3 — Target Architecture: VPC Lattice Service Network + Cloud WAN</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin:0.5rem 0 1rem 0;">
+                Each application isolated in its own VPC — connected exclusively through the Lattice Service Network (SN-E).
+                IAM Auth Policies (DENY ALL by default) replace IP-based access. SigV4 on every request.
+                Cloud WAN network segment eliminates the peering matrix.
+            </p>
+            <div style="background:#0d1117; border-radius:10px; border:1px solid var(--border); padding:1rem; margin-top:0.5rem; text-align:center; overflow:hidden;">
+                <img src="{% static project.lattice_diagram %}"
+                     alt="VPC Lattice + Cloud WAN Architecture"
+                     style="width:100%; max-width:1000px; height:auto; display:block; margin:0 auto;">
+            </div>
+        </div>
+        {% endif %}
+
         <!-- PIPELINE DIAGRAM (optional second diagram) -->
         {% if project.pipeline_image %}
         <div class="detail-diagram-section" style="margin:2rem 0;">

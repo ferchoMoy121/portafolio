@@ -1,0 +1,302 @@
+<svg width="100%" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <defs>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#D85A30" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#AFA9EC" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#D85A30" stroke-width="1.8" stroke-linecap="round"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="600" fill="#0d1117"/>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CLOUD WAN — TOP BANNER                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <rect x="5" y="5" width="990" height="58" rx="10" fill="#0f1c2e" stroke="#185FA5" stroke-width="1.5"/>
+  <text x="500" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="#378ADD">☁  Cloud WAN — Network Segment  (Phase 3 — Definitive Connectivity Layer)</text>
+  <text x="500" y="42" text-anchor="middle" font-size="9" fill="#555">Replaces all VPC Peerings · Segment-based routing (Dev / QA / Prod / SharedServices) · Attachments per provider VPC · No transitive peering needed</text>
+  <!-- Cloud WAN segment tags -->
+  <rect x="30" y="47" width="55" height="13" rx="3" fill="#0a2218" stroke="#1D9E75" stroke-width="0.5"/>
+  <text x="57" y="57" text-anchor="middle" font-size="7.5" fill="#5DCAA5">Dev segment</text>
+  <rect x="93" y="47" width="55" height="13" rx="3" fill="#0a2218" stroke="#1D9E75" stroke-width="0.5"/>
+  <text x="120" y="57" text-anchor="middle" font-size="7.5" fill="#5DCAA5">QA segment</text>
+  <rect x="156" y="47" width="55" height="13" rx="3" fill="#0a1628" stroke="#378ADD" stroke-width="0.5"/>
+  <text x="183" y="57" text-anchor="middle" font-size="7.5" fill="#378ADD">Prod segment</text>
+  <rect x="219" y="47" width="85" height="13" rx="3" fill="#13132e" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="261" y="57" text-anchor="middle" font-size="7.5" fill="#AFA9EC">SharedServices segment</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- LEFT — CONSUMER VPCs                                               -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <rect x="5" y="73" width="160" height="460" rx="10" fill="#161b22" stroke="#333" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="85" y="91" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Consumer VPCs</text>
+
+  <!-- Consumer VPC 1 — Dev Apps -->
+  <rect x="13" y="98" width="144" height="90" rx="7" fill="#0a2218" stroke="#1D9E75" stroke-width="1"/>
+  <text x="85" y="114" text-anchor="middle" font-size="9" font-weight="700" fill="#5DCAA5">App VPCs — DEV</text>
+  <text x="85" y="129" text-anchor="middle" font-size="8" fill="#777">ECS TaskRole-Dev-Hub</text>
+  <text x="85" y="143" text-anchor="middle" font-size="8" fill="#777">ECS TaskRole-Dev-Agents</text>
+  <text x="85" y="157" text-anchor="middle" font-size="8" fill="#555">→ SigV4 signed requests</text>
+  <rect x="20" y="163" width="130" height="18" rx="4" fill="#0f3024"/>
+  <text x="85" y="175" text-anchor="middle" font-size="8" font-weight="600" fill="#1D9E75">VPC Association → SN-E</text>
+
+  <!-- Consumer VPC 2 — QA Apps -->
+  <rect x="13" y="198" width="144" height="80" rx="7" fill="#0a2218" stroke="#1D9E75" stroke-width="1"/>
+  <text x="85" y="214" text-anchor="middle" font-size="9" font-weight="700" fill="#5DCAA5">App VPCs — QA</text>
+  <text x="85" y="229" text-anchor="middle" font-size="8" fill="#777">ECS TaskRole-QA-*</text>
+  <text x="85" y="243" text-anchor="middle" font-size="8" fill="#555">→ SigV4 signed requests</text>
+  <rect x="20" y="249" width="130" height="18" rx="4" fill="#0f3024"/>
+  <text x="85" y="261" text-anchor="middle" font-size="8" font-weight="600" fill="#1D9E75">VPC Association → SN-E</text>
+
+  <!-- Consumer VPC 3 — Platform -->
+  <rect x="13" y="288" width="144" height="80" rx="7" fill="#0a1628" stroke="#534AB7" stroke-width="1"/>
+  <text x="85" y="304" text-anchor="middle" font-size="9" font-weight="700" fill="#AFA9EC">Platform VPC</text>
+  <text x="85" y="319" text-anchor="middle" font-size="8" fill="#777">ECS TaskRole-Platform</text>
+  <text x="85" y="333" text-anchor="middle" font-size="8" fill="#555">→ SigV4 signed requests</text>
+  <rect x="20" y="339" width="130" height="18" rx="4" fill="#13132e"/>
+  <text x="85" y="351" text-anchor="middle" font-size="8" font-weight="600" fill="#AFA9EC">VPC Association → SN-E</text>
+
+  <!-- Consumer VPC 4 — Payments -->
+  <rect x="13" y="378" width="144" height="80" rx="7" fill="#1e1a0a" stroke="#BA7517" stroke-width="1"/>
+  <text x="85" y="394" text-anchor="middle" font-size="9" font-weight="700" fill="#E0A040">Payments VPC</text>
+  <text x="85" y="409" text-anchor="middle" font-size="8" fill="#777">ECS TaskRole-Payments</text>
+  <text x="85" y="423" text-anchor="middle" font-size="8" fill="#555">→ SigV4 signed requests</text>
+  <rect x="20" y="429" width="130" height="18" rx="4" fill="#2d2010"/>
+  <text x="85" y="441" text-anchor="middle" font-size="8" font-weight="600" fill="#E0A040">VPC Association → SN-E</text>
+
+  <!-- VPC Association arrows → SN-E -->
+  <line x1="157" y1="143" x2="223" y2="290" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="157" y1="238" x2="223" y2="300" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="157" y1="328" x2="223" y2="315" stroke="#AFA9EC" stroke-width="1.5" marker-end="url(#arr-purple)"/>
+  <line x1="157" y1="418" x2="223" y2="330" stroke="#E0A040" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CENTER — SERVICE NETWORK (SN-E)                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <rect x="175" y="73" width="290" height="460" rx="12" fill="#0f1c2e" stroke="#185FA5" stroke-width="2"/>
+  <text x="320" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="#378ADD">VPC Lattice</text>
+  <text x="320" y="111" text-anchor="middle" font-size="10" font-weight="600" fill="#5DCAA5">Service Network  (SN-E)</text>
+
+  <!-- SN-E Endpoint box -->
+  <rect x="195" y="120" width="250" height="55" rx="8" fill="#0a2218" stroke="#1D9E75" stroke-width="1.5"/>
+  <text x="320" y="140" text-anchor="middle" font-size="10" font-weight="700" fill="#5DCAA5">Service Network Endpoint</text>
+  <text x="320" y="155" text-anchor="middle" font-size="8" fill="#777">169.254.171.x  (link-local, per VPC)</text>
+  <text x="320" y="168" text-anchor="middle" font-size="8" fill="#555">Route53 PHZ resolves svc-name.internal → SN-E IP</text>
+
+  <!-- Traffic flow steps inside SN-E -->
+  <rect x="185" y="185" width="270" height="155" rx="8" fill="#111820" stroke="#1e2d3d" stroke-width="1"/>
+  <text x="320" y="202" text-anchor="middle" font-size="9" font-weight="700" fill="#888">Request Evaluation — Every Hop</text>
+
+  <!-- Step 1 -->
+  <rect x="193" y="210" width="254" height="28" rx="5" fill="#0a1628" stroke="#378ADD" stroke-width="0.8"/>
+  <text x="210" y="222" font-size="8.5" font-weight="700" fill="#378ADD">①</text>
+  <text x="225" y="222" font-size="8" fill="#aaa">DNS — svc.internal → 169.254.171.x via Route53 PHZ</text>
+  <text x="225" y="233" font-size="7.5" fill="#555">Consumer's SN-E resolves to Lattice link-local address</text>
+
+  <!-- Step 2 -->
+  <rect x="193" y="244" width="254" height="28" rx="5" fill="#0a2218" stroke="#1D9E75" stroke-width="0.8"/>
+  <text x="210" y="256" font-size="8.5" font-weight="700" fill="#5DCAA5">②</text>
+  <text x="225" y="256" font-size="8" fill="#aaa">SG Check — Lattice prefix list 169.254.0.0/16</text>
+  <text x="225" y="267" font-size="7.5" fill="#555">Outbound SG must allow Lattice managed prefix</text>
+
+  <!-- Step 3 -->
+  <rect x="193" y="278" width="254" height="28" rx="5" fill="#2d1b0a" stroke="#D85A30" stroke-width="0.8"/>
+  <text x="210" y="290" font-size="8.5" font-weight="700" fill="#F0997B">③</text>
+  <text x="225" y="290" font-size="8" fill="#aaa">Auth Policy — IAM role validated (SigV4)</text>
+  <text x="225" y="301" font-size="7.5" fill="#cc7755">Role NOT in policy → 403 Forbidden  ·  Role in policy → ALLOW</text>
+
+  <!-- Step 4 -->
+  <rect x="193" y="312" width="254" height="25" rx="5" fill="#0a1628" stroke="#534AB7" stroke-width="0.8"/>
+  <text x="210" y="324" font-size="8.5" font-weight="700" fill="#AFA9EC">④</text>
+  <text x="225" y="324" font-size="8" fill="#aaa">Listener Rule → Target Group → ECS Task</text>
+  <text x="225" y="333" font-size="7.5" fill="#555">HTTP :80 or HTTPS :443 listener routes to registered targets</text>
+
+  <!-- Auth Policy note -->
+  <rect x="185" y="350" width="270" height="80" rx="8" fill="#1a0a2e" stroke="#534AB7" stroke-width="1"/>
+  <text x="320" y="367" text-anchor="middle" font-size="9" font-weight="700" fill="#AFA9EC">Auth Policy — DENY ALL by Default</text>
+  <text x="193" y="382" font-size="8" fill="#888">Hub TaskRole    → API Provider svc  ✓  ALLOW</text>
+  <text x="193" y="395" font-size="8" fill="#888">Agents TaskRole → Audit svc         ✓  ALLOW</text>
+  <text x="193" y="408" font-size="8" fill="#cc7755">Hub TaskRole    → Audit svc         ✗  DENY  (403)</text>
+  <text x="193" y="421" font-size="8" fill="#cc7755">Unknown caller  → any svc           ✗  DENY  (implicit)</text>
+
+  <!-- Pure Provider note -->
+  <rect x="185" y="440" width="270" height="50" rx="8" fill="#0a2218" stroke="#1D9E75" stroke-width="1"/>
+  <text x="320" y="457" text-anchor="middle" font-size="9" font-weight="700" fill="#5DCAA5">VPC Role: Pure Provider</text>
+  <text x="320" y="472" text-anchor="middle" font-size="8" fill="#777">Only Service Associations — no VPC Associations</text>
+  <text x="320" y="484" text-anchor="middle" font-size="8" fill="#555">No outbound peering dependencies · Clean isolation</text>
+
+  <!-- Service Association arrows → Provider VPCs -->
+  <line x1="465" y1="200" x2="510" y2="115" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="465" y1="240" x2="510" y2="213" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="465" y1="280" x2="510" y2="311" stroke="#AFA9EC" stroke-width="1.5" marker-end="url(#arr-purple)"/>
+  <line x1="465" y1="320" x2="510" y2="409" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="465" y1="350" x2="510" y2="507" stroke="#378ADD" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <line x1="465" y1="370" x2="510" y2="508" stroke="#D85A30" stroke-width="1" stroke-dasharray="4 2" marker-end="url(#arr-orange)"/>
+
+  <!-- Labels on arrows right side -->
+  <text x="470" y="163" font-size="7.5" fill="#1D9E75">Service</text>
+  <text x="470" y="173" font-size="7.5" fill="#1D9E75">Assoc.</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- RIGHT — PROVIDER VPCs (one per app)                                -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <rect x="470" y="73" width="525" height="460" rx="12" fill="#161b22" stroke="#333" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="732" y="91" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Provider VPCs — One per Application (Pure Provider Model)</text>
+
+  <!-- PROVIDER VPC TEMPLATE (6 VPCs) -->
+  <!-- Each VPC: width=240, height=65, 2 columns x 3 rows -->
+  <!-- Col1: x=478, Col2: x=726 -->
+  <!-- Row1: y=98, Row2: y=231, Row3: y=364 (wait, 460px height / 3 rows = ~152px per row) -->
+  <!-- Actually let me do 3 rows of 2 VPCs each: row height = 148px -->
+  <!-- Row 1: y=98-163, Row 2: y=178-243, Row 3: y=258-323, Row 4: y=338-403, Row 5: y=418-483, Row 6: needs to fit -->
+  <!-- Let me do 2 columns of 3 rows: -->
+  <!-- Col 1: x=478-713 (w=235), Col 2: x=723-958 (w=235) -->
+  <!-- Row 1: y=98-168, Row 2: y=178-248, Row 3: y=258-328, Row 4: y=338-408, Row 5: y=418-488, Row 6: ... doesn't fit in 6 rows in left col -->
+  <!-- Actually 6 VPCs, 2 per row = 3 rows of 2 VPCs each: row height ~148px -->
+  <!-- Or 3 per row = 2 rows of 3 VPCs: each VPC is (525-20)/3 = 168px wide, 2 rows of ~210px each -->
+
+  <!-- Let me go with 3x2 grid: 3 VPCs per row, 2 rows -->
+  <!-- Col widths: (525-30)/3 = 165px each, gaps = 7px -->
+  <!-- Col1: x=478, Col2: x=650, Col3: x=822 -->
+  <!-- Row1: y=98-193 (95px), Row2: y=203-298 (95px), Row3: y=308-403 (95px), Row4: y=413-508 (95px) -->
+  <!-- 4 rows of 1 col? No... let me just do 2 cols and 3 rows = 6 VPCs -->
+
+  <!-- 2 columns: x=478 (w=230), x=715 (w=232) -->
+  <!-- 3 rows: y=98 (h=90), y=198 (h=90), y=298 (h=90) ... only 3 rows? but 6 VPCs = 3 rows of 2 = ok -->
+  <!-- But height of container is 460 (y=73 to y=533) -->
+  <!-- Row gap: (460 - 10 - 3*90) / 2 = (460-280)/2 = 90px gap??? That's too much -->
+  <!-- Let me use: row1 y=98, row2 y=218, row3 y=338, each h=110px -->
+  <!-- 3 * 110 = 330, 2 gaps * 10 = 20, header = 20, total = 370 < 460 ok -->
+
+  <!-- APP 1 — DB Layer -->
+  <rect x="478" y="98" width="230" height="108" rx="8" fill="#1a2520" stroke="#1D9E75" stroke-width="1.5"/>
+  <rect x="478" y="98" width="230" height="22" rx="8" fill="#0a2218"/>
+  <rect x="478" y="110" width="230" height="10" fill="#0a2218"/>
+  <text x="493" y="113" font-size="9" font-weight="700" fill="#5DCAA5">App 1 VPC — DB Layer</text>
+  <text x="698" y="113" text-anchor="end" font-size="7.5" fill="#3d7a5a">Service Assoc.</text>
+  <!-- Service + Listener -->
+  <rect x="486" y="126" width="104" height="34" rx="4" fill="#0f3024" stroke="#1D9E75" stroke-width="0.8"/>
+  <text x="538" y="139" text-anchor="middle" font-size="8" font-weight="700" fill="#5DCAA5">Lattice Service</text>
+  <text x="538" y="152" text-anchor="middle" font-size="7.5" fill="#777">Listener :443 HTTPS</text>
+  <!-- Auth Policy -->
+  <rect x="598" y="126" width="104" height="34" rx="4" fill="#2d1b0a" stroke="#D85A30" stroke-width="0.8"/>
+  <text x="650" y="139" text-anchor="middle" font-size="8" font-weight="700" fill="#F0997B">Auth Policy</text>
+  <text x="650" y="152" text-anchor="middle" font-size="7.5" fill="#cc7755">ALLOW Analytics role</text>
+  <!-- Target -->
+  <rect x="486" y="167" width="216" height="30" rx="4" fill="#111820" stroke="#333" stroke-width="0.8"/>
+  <text x="594" y="180" text-anchor="middle" font-size="8" fill="#777">Target Group → ECS Tasks  (TaskRole-App1)</text>
+  <text x="594" y="192" text-anchor="middle" font-size="7.5" fill="#444">DENY ALL by default · only Analytics TaskRole ALLOWed</text>
+
+  <!-- APP 2 — Hub Service -->
+  <rect x="715" y="98" width="272" height="108" rx="8" fill="#0f1e30" stroke="#378ADD" stroke-width="1.5"/>
+  <rect x="715" y="98" width="272" height="22" rx="8" fill="#0a1628"/>
+  <rect x="715" y="110" width="272" height="10" fill="#0a1628"/>
+  <text x="730" y="113" font-size="9" font-weight="700" fill="#378ADD">App 2 VPC — Hub Service</text>
+  <text x="977" y="113" text-anchor="end" font-size="7.5" fill="#185FA5">Service Assoc.</text>
+  <rect x="723" y="126" width="120" height="34" rx="4" fill="#0a1628" stroke="#378ADD" stroke-width="0.8"/>
+  <text x="783" y="139" text-anchor="middle" font-size="8" font-weight="700" fill="#378ADD">Lattice Service</text>
+  <text x="783" y="152" text-anchor="middle" font-size="7.5" fill="#777">Listener :443 HTTPS</text>
+  <rect x="851" y="126" width="128" height="34" rx="4" fill="#2d1b0a" stroke="#D85A30" stroke-width="0.8"/>
+  <text x="915" y="139" text-anchor="middle" font-size="8" font-weight="700" fill="#F0997B">Auth Policy</text>
+  <text x="915" y="152" text-anchor="middle" font-size="7.5" fill="#cc7755">ALLOW consumer TaskRoles</text>
+  <rect x="723" y="167" width="256" height="30" rx="4" fill="#111820" stroke="#333" stroke-width="0.8"/>
+  <text x="851" y="180" text-anchor="middle" font-size="8" fill="#777">Target Group → ECS Tasks  (TaskRole-App2-Hub)</text>
+  <text x="851" y="192" text-anchor="middle" font-size="7.5" fill="#444">Calls App3, App4, App5 via SN-E (SigV4 signed)</text>
+
+  <!-- APP 3 — API Provider -->
+  <rect x="478" y="218" width="230" height="108" rx="8" fill="#1a1a2e" stroke="#534AB7" stroke-width="1.5"/>
+  <rect x="478" y="218" width="230" height="22" rx="8" fill="#13132e"/>
+  <rect x="478" y="230" width="230" height="10" fill="#13132e"/>
+  <text x="493" y="233" font-size="9" font-weight="700" fill="#AFA9EC">App 3 VPC — API Provider</text>
+  <text x="698" y="233" text-anchor="end" font-size="7.5" fill="#534AB7">Service Assoc.</text>
+  <rect x="486" y="246" width="104" height="34" rx="4" fill="#13132e" stroke="#534AB7" stroke-width="0.8"/>
+  <text x="538" y="259" text-anchor="middle" font-size="8" font-weight="700" fill="#AFA9EC">Lattice Service</text>
+  <text x="538" y="272" text-anchor="middle" font-size="7.5" fill="#777">Listener :443 HTTPS</text>
+  <rect x="598" y="246" width="104" height="34" rx="4" fill="#2d1b0a" stroke="#D85A30" stroke-width="0.8"/>
+  <text x="650" y="259" text-anchor="middle" font-size="8" font-weight="700" fill="#F0997B">Auth Policy</text>
+  <text x="650" y="272" text-anchor="middle" font-size="7.5" fill="#cc7755">ALLOW Hub + Agents roles</text>
+  <rect x="486" y="287" width="216" height="30" rx="4" fill="#111820" stroke="#333" stroke-width="0.8"/>
+  <text x="594" y="300" text-anchor="middle" font-size="8" fill="#777">Target Group → ECS Tasks  (TaskRole-App3)</text>
+  <text x="594" y="312" text-anchor="middle" font-size="7.5" fill="#444">DENY ALL · ALLOW Hub TaskRole + Agents TaskRole</text>
+
+  <!-- APP 4 — Analytics -->
+  <rect x="715" y="218" width="272" height="108" rx="8" fill="#2d1b0a" stroke="#D85A30" stroke-width="1.5"/>
+  <rect x="715" y="218" width="272" height="22" rx="8" fill="#3d1a0a"/>
+  <rect x="715" y="230" width="272" height="10" fill="#3d1a0a"/>
+  <text x="730" y="233" font-size="9" font-weight="700" fill="#F0997B">App 4 VPC — Analytics  ⚠</text>
+  <text x="977" y="233" text-anchor="end" font-size="7.5" fill="#D85A30">Service Assoc.</text>
+  <rect x="723" y="246" width="120" height="34" rx="4" fill="#2d1b0a" stroke="#D85A30" stroke-width="0.8"/>
+  <text x="783" y="259" text-anchor="middle" font-size="8" font-weight="700" fill="#F0997B">Lattice Service</text>
+  <text x="783" y="272" text-anchor="middle" font-size="7.5" fill="#888">Listener :443 HTTPS</text>
+  <rect x="851" y="246" width="128" height="34" rx="4" fill="#2d1b0a" stroke="#D85A30" stroke-width="1"/>
+  <text x="915" y="259" text-anchor="middle" font-size="8" font-weight="700" fill="#F0997B">Auth Policy</text>
+  <text x="915" y="272" text-anchor="middle" font-size="7.5" fill="#cc7755">ALLOW Hub role</text>
+  <rect x="723" y="287" width="256" height="30" rx="4" fill="#111820" stroke="#333" stroke-width="0.8"/>
+  <text x="851" y="300" text-anchor="middle" font-size="8" fill="#777">Target Group → ECS Tasks  (TaskRole-App4)</text>
+  <text x="851" y="312" text-anchor="middle" font-size="7.5" fill="#6a3520">Phase 1: :3306 direct → Phase 2: Lattice Service (no raw port)</text>
+
+  <!-- APP 5 — Agents -->
+  <rect x="478" y="338" width="230" height="108" rx="8" fill="#1e1a0a" stroke="#BA7517" stroke-width="1.5"/>
+  <rect x="478" y="338" width="230" height="22" rx="8" fill="#2d2010"/>
+  <rect x="478" y="350" width="230" height="10" fill="#2d2010"/>
+  <text x="493" y="353" font-size="9" font-weight="700" fill="#E0A040">App 5 VPC — Agents</text>
+  <text x="698" y="353" text-anchor="end" font-size="7.5" fill="#BA7517">Service Assoc.</text>
+  <rect x="486" y="366" width="104" height="34" rx="4" fill="#2d2010" stroke="#BA7517" stroke-width="0.8"/>
+  <text x="538" y="379" text-anchor="middle" font-size="8" font-weight="700" fill="#E0A040">Lattice Service</text>
+  <text x="538" y="392" text-anchor="middle" font-size="7.5" fill="#777">Listener :443 HTTPS</text>
+  <rect x="598" y="366" width="104" height="34" rx="4" fill="#2d1b0a" stroke="#D85A30" stroke-width="0.8"/>
+  <text x="650" y="379" text-anchor="middle" font-size="8" font-weight="700" fill="#F0997B">Auth Policy</text>
+  <text x="650" y="392" text-anchor="middle" font-size="7.5" fill="#cc7755">ALLOW Hub role</text>
+  <rect x="486" y="407" width="216" height="30" rx="4" fill="#111820" stroke="#333" stroke-width="0.8"/>
+  <text x="594" y="420" text-anchor="middle" font-size="8" fill="#777">Target Group → ECS Tasks  (TaskRole-App5)</text>
+  <text x="594" y="432" text-anchor="middle" font-size="7.5" fill="#444">Agents (AZ-a) + Workflow (AZ-b) — intra-group allowed</text>
+
+  <!-- APP 6 — Audit -->
+  <rect x="715" y="338" width="272" height="108" rx="8" fill="#0f1e30" stroke="#185FA5" stroke-width="1.5"/>
+  <rect x="715" y="338" width="272" height="22" rx="8" fill="#0a1628"/>
+  <rect x="715" y="350" width="272" height="10" fill="#0a1628"/>
+  <text x="730" y="353" font-size="9" font-weight="700" fill="#378ADD">App 6 VPC — Audit Service</text>
+  <text x="977" y="353" text-anchor="end" font-size="7.5" fill="#185FA5">Service Assoc.</text>
+  <rect x="723" y="366" width="120" height="34" rx="4" fill="#0a1628" stroke="#378ADD" stroke-width="0.8"/>
+  <text x="783" y="379" text-anchor="middle" font-size="8" font-weight="700" fill="#378ADD">Lattice Service</text>
+  <text x="783" y="392" text-anchor="middle" font-size="7.5" fill="#777">Listener :443 HTTPS</text>
+  <rect x="851" y="366" width="128" height="34" rx="4" fill="#2d1b0a" stroke="#D85A30" stroke-width="1.5"/>
+  <text x="915" y="379" text-anchor="middle" font-size="8" font-weight="700" fill="#F0997B">Auth Policy  ★</text>
+  <text x="915" y="392" text-anchor="middle" font-size="7.5" fill="#cc7755">ALLOW Agents ONLY</text>
+  <rect x="723" y="407" width="256" height="30" rx="4" fill="#111820" stroke="#D85A30" stroke-width="0.8"/>
+  <text x="851" y="420" text-anchor="middle" font-size="8" fill="#cc7755">Hub TaskRole → 403 Forbidden  (not in Auth Policy)</text>
+  <text x="851" y="432" text-anchor="middle" font-size="7.5" fill="#6a3520">Zero Trust proven: adjacent app DENIED at identity layer</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- BOTTOM LEGEND                                                       -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <rect x="5" y="540" width="990" height="55" rx="8" fill="#0d1117" stroke="#1e2d3d" stroke-width="1"/>
+  <text x="500" y="557" text-anchor="middle" font-size="9" font-weight="700" fill="#777">Architecture Principles</text>
+
+  <rect x="15" y="562" width="8" height="8" rx="2" fill="#1D9E75"/>
+  <text x="28" y="570" font-size="8" fill="#666">VPC Association = consumer VPC joins Service Network via SN-E</text>
+
+  <rect x="200" y="562" width="8" height="8" rx="2" fill="#534AB7"/>
+  <text x="213" y="570" font-size="8" fill="#666">Service Association = provider VPC registers its Lattice Service</text>
+
+  <rect x="420" y="562" width="8" height="8" rx="2" fill="#D85A30"/>
+  <text x="433" y="570" font-size="8" fill="#666">Auth Policy: DENY ALL by default · every caller listed by IAM role</text>
+
+  <rect x="660" y="562" width="8" height="8" rx="2" fill="#378ADD"/>
+  <text x="673" y="570" font-size="8" fill="#666">SigV4 on every request · Listener replaces ALB · pure provider VPCs</text>
+
+  <!-- Cloud WAN down arrows -->
+  <line x1="500" y1="63" x2="500" y2="73" stroke="#185FA5" stroke-width="1.5" stroke-dasharray="3 2" marker-end="url(#arr-blue)"/>
+
+</svg>
